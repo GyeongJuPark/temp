@@ -9,3 +9,11 @@
     
 }
 
+input, select, button {
+    font-size: 14px !important;
+}
+
+.mat-typography h4 {
+    font-family: 'Pretendard-Regular' !important;
+    font-style: normal !important;
+}

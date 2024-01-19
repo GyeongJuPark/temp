@@ -1,0 +1,112 @@
+/* 공통 스타일 */
+
+.leader-modal {
+    width: 560px;
+    height: 980px;
+}
+
+.leaderTable {
+    width: 480px;
+    height: 531px;
+    margin: 0 auto;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.leaderTable>thead {
+    height: 52px;
+}
+
+.leaderTable>thead>tr>th {
+    border-top: 2px solid #EEEEEE;
+    border-bottom: 2px solid #EEEEEE;
+    background-color: #FBFBFB;
+    font-weight: 500;
+    color: #2C2C2C;
+}
+
+.leaderTable>tbody>tr>td {
+    height: 51px;
+    border-bottom: 1px solid #EEEEEE;
+    color: #212529;
+}
+
+.buttons {
+    display: block;
+    margin-top: 68px;
+    margin-bottom: 76px;
+    text-align: center;
+}
+
+.buttons>button {
+    width: 140px;
+    height: 56px;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.buttons .cancel_btn {
+    margin-right: 8px;
+    border: 1px solid #0F2D6A;
+    background-color: #FFFFFF;
+    color: #0F2D6A;
+}
+
+.buttons .cancel_btn:hover {
+    border: 0;
+    background-color: #0F2D6A;
+    color: #FFFFFF;
+}
+
+.buttons .add_btn {
+    border: 0;
+    background-color: #0F2D6A;
+    color: #FFFFFF;
+}
+
+.buttons .add_btn:hover {
+    border: 1px solid #0F2D6A;
+    background-color: #FFFFFF;
+    color: #0F2D6A;
+}
+
+/* 지도자 식별코드 검색 모달 스타일 */
+.modal-header {
+    margin: 28px 0 30px 40px;
+    font-weight: 700;
+    font-size: 18px;
+    color: #0F2D6A;
+}
+
+.modal-body>label {
+    margin: 46px 74px 48px 40px;
+    font-weight: 500;
+    font-size: 15px;
+    color: #212529;
+}
+
+.modal-body>input {
+    width: 284px;
+    height: 44px;
+    margin-right: 12px;
+    padding-left: 16px;
+    border: 1px solid #DDDDDD;
+    border-radius: 5px;
+}
+
+.modal-body>button {
+    width: 84px;
+    height: 44px;
+    border: 1px solid #0F2D6A;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    color: #0F2D6A;
+}
+
+.modal-body>button:hover {
+    background-color: #0F2D6A;
+    color: #FFFFFF;
+}
+
+/* 학교명 검색 모달 스타일 */
+.large-modal .button2 {}

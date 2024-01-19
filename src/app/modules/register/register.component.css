@@ -1,4 +1,5 @@
 .registerPage {
+    height: 1660px;
     background-color: #FBFBFB;
     overflow: hidden;
 }
@@ -162,6 +163,12 @@ select {
     border-radius: 5px;
 }
 
+.sel {
+    width: 264px;
+    height: 44px;
+    margin: 10px;
+}
+
 .input__second .form-group input[type="tel"] {
     width: 69px;
     height: 43px;
@@ -306,10 +313,11 @@ select {
     color: #212529;
 }
 
-.t > tbody > tr > td > .add_btn {
+.t>tbody>tr>td>.add_btn {
     width: 56px;
     height: 44px;
     background-color: #238AF7;
+    border: 0;
 }
 
 /* 취소하기, 등록하기 */
@@ -596,7 +604,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin-bottom: 73px;
 }
 
-SchoolNameModal .search_btn {
+#SchoolNameModal .search_btn {
     width: 84px;
     height: 44px;
     border: 1px solid #0F2D6A;
@@ -643,4 +651,8 @@ SchoolNameModal .search_btn {
     border: 1px solid #0F2D6A;
     background-color: #FFFFFF;
     color: #0F2D6A;
+}
+
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5) !important;
 }
