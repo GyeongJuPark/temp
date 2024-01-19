@@ -1,0 +1,59 @@
+/* 공통 스타일 */
+
+.cancel-modal {
+    width: 400px;
+    height: 253px;
+    text-align: center;
+}
+
+.small-modal>h4 {
+    margin-top: 39px;
+    font-weight: 500;
+    font-size: 24px;
+    color: #0F2D6A;
+}
+
+.small-modal>p {
+    margin-top: 20px;
+    font-weight: 400;
+    font-size: 16px;
+    color: #212529;
+}
+
+.buttons {
+    display: block;
+    margin-top: 42px;
+    text-align: center;
+}
+
+.buttons>button {
+    width: 88px;
+    height: 42px;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.buttons .cancel_btn {
+    margin-right: 8px;
+    border: 1px solid #0F2D6A;
+    background-color: #FFFFFF;
+    color: #0F2D6A;
+}
+
+.buttons .cancel_btn:hover {
+    border: 0;
+    background-color: #0F2D6A;
+    color: #FFFFFF;
+}
+
+.buttons .add_btn {
+    border: 0;
+    background-color: #0F2D6A;
+    color: #FFFFFF;
+}
+
+.buttons .add_btn:hover {
+    border: 1px solid #0F2D6A;
+    background-color: #FFFFFF;
+    color: #0F2D6A;
+}

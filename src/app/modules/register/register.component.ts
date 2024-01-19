@@ -1,6 +1,7 @@
-import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LargeModalComponent } from '../../shared/large-modal/large-modal.component';
+import { SmallModalComponent } from '../../shared/small-modal/small-modal.component';
 
 
 
@@ -12,30 +13,21 @@ import { LargeModalComponent } from '../../shared/large-modal/large-modal.compon
 
 export class RegisterComponent {
 
-  // 학교명검색 모달창
-  // openSchoolModal() {
-  //   const schoolModal = this.el.nativeElement.querySelector('#SchoolNameModal');
-
-  //   this.renderer.addClass(schoolModal, 'show');
-  //   this.renderer.setStyle(schoolModal, 'display', 'block');
-  //   document.body.classList.add('modal-open');
-  // }
-
   constructor(private dialog: MatDialog) { }
 
   openLargeModal(buttonType: string) {
     const dialogRef = this.dialog.open(LargeModalComponent, {
-      data: {
-        title: '제목',
-        content: '내용',
-        dynamicContent: buttonType
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog closed with result: ${result}`);
+      data: { dynamicContent: buttonType }
     });
   }
+
+  openSmallModal(buttonType: string) {
+    const dialogRef = this.dialog.open(SmallModalComponent, {
+      data: { dynamicContent: buttonType }
+    });
+  }
+
+
 
   // 이미지 크기 검사
   base64ImageData: string = '';

@@ -152,6 +152,12 @@
     color: #FFFFFF;
 }
 
+.leaderInfo .form-group button:hover {
+    border: 1px solid #0F2D6A;
+    background-color: #FFFFFF;
+    color:#0F2D6A;
+}
+
 .input__second .form-group input[type="text"],
 input[type="date"],
 select {

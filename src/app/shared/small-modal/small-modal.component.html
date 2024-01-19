@@ -1,1 +1,37 @@
-<p>small-modal works!</p>
+<div class="cancel-modal" [ngClass]="data.buttonClass">
+    <div class="small-modal">
+        <ng-container *ngIf="data.dynamicContent === 'cancelBtn'">
+            <h4>지도자 등록 취소</h4>
+            <p>지도자 등록을 취소하시겠습니까? <br> 작성한 내용은 모두 삭제됩니다.</p>
+            <div class="buttons">
+                <button type="button" class="cancel_btn" (click)="closeDialog()">취소</button>
+                <button type="button" class="add_btn" (click)="goToIndexPage()">확인</button>
+            </div>
+        </ng-container>
+    </div>
+
+    <div class="register-modal" [ngClass]="data.buttonClass">
+        <div class="small-modal">
+            <ng-container *ngIf="data.dynamicContent === 'registerBtn'">
+                <h4>지도자 등록</h4>
+                <p>입력한 내용으로 지도자를 등록하시겠습니까?</p>
+                <div class="buttons">
+                    <button type="button" class="cancel_btn" (click)="closeDialog()">취소</button>
+                    <button type="button" class="add_btn" (click)="goToIndexPage()">확인</button>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+
+    <div class="validation-modal" [ngClass]="data.buttonClass">
+        <div class="small-modal">
+            <ng-container *ngIf="data.dynamicContent === 'validation'">
+                <h4>필수입력값 확인</h4>
+                <p>필수입력값이 채워지지 않았습니다. <br> 확인 후 채워주시길 바랍니다.</p>
+                <div class="buttons">
+                    <button type="button" class="add_btn" (click)="closeDialog()">확인</button>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>
