@@ -9,6 +9,9 @@ import { HomeComponent } from './modules/home/home.component';
 import { RegisterComponent } from './modules/register/register.component';
 import { LargeModalComponent } from './shared/large-modal/large-modal.component';
 import { SmallModalComponent } from './shared/small-modal/small-modal.component';
+import { DetailComponent } from './modules/detail/detail.component';
+import { UpdateComponent } from './modules/update/update.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,13 +19,16 @@ import { SmallModalComponent } from './shared/small-modal/small-modal.component'
     HomeComponent,
     RegisterComponent,
     LargeModalComponent,
-    SmallModalComponent
+    SmallModalComponent,
+    DetailComponent,
+    UpdateComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     LayoutModule,
-    MatDialogModule
+    MatDialogModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

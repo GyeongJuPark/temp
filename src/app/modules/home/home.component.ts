@@ -10,8 +10,12 @@ export class HomeComponent {
 
   constructor(private routes: Router, private el: ElementRef, private renderer: Renderer2) { }
 
-  goToRegisterPage() :void {
+  goToRegisterPage(): void {
     this.routes.navigate(['home/register']);
+  }
+
+  goToDetailPage(): void {
+    this.routes.navigate(['home/detail']);
   }
 
   CustomDropdown(): void {

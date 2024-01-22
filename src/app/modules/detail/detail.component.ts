@@ -1,34 +1,30 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { LargeModalComponent } from '../../shared/large-modal/large-modal.component';
-import { SmallModalComponent } from '../../shared/small-modal/small-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  selector: 'app-detail',
+  templateUrl: './detail.component.html',
+  styleUrls: [
+    './detail.component.css',
+    '../register/register.component.css'
+  ]
 })
+export class DetailComponent {
 
-export class RegisterComponent {
+  constructor(private routes: Router) {  }
 
-  constructor(private dialog: MatDialog) { }
-
-  // 식별코드, 학교명 모달창
-  openLargeModal(buttonType: string) {
-    const dialogRef = this.dialog.open(LargeModalComponent, {
-      data: { dynamicContent: buttonType }
-    });
+  goToIndexPage(): void {
+    this.routes.navigate(["home"]);
   }
 
-  // 유효성 검사, 취소, 등록, 수정 모달창
-  openSmallModal(buttonType: string) {
-    const dialogRef = this.dialog.open(SmallModalComponent, {
-      data: { dynamicContent: buttonType }
-    });
+  goToUpdatePage(): void {
+    this.routes.navigate(["home/update"])
   }
 
   // 이미지 크기 검사
   base64ImageData: string = '';
+  Imagevalue: string = '';
+  LeaderImage: string = '';
 
   imageSizeCheck(event: any): void {
     const fileInput = event.target;
@@ -54,11 +50,12 @@ export class RegisterComponent {
         if (srcData) {
           selectedImage.src = srcData as string;
           this.base64ImageData = (srcData as string).split(",")[1];
+          this.Imagevalue = this.base64ImageData;
+          this.LeaderImage = this.base64ImageData;
         }
       };
 
       fileReader.readAsDataURL(imageFile);
     }
   }
-
 }
