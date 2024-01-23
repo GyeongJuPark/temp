@@ -12,6 +12,7 @@ import { SmallModalComponent } from './shared/small-modal/small-modal.component'
 import { DetailComponent } from './modules/detail/detail.component';
 import { UpdateComponent } from './modules/update/update.component';
 import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     LayoutModule,
     MatDialogModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

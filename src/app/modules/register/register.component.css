@@ -1,5 +1,5 @@
 .registerPage {
-    height: 1580px;
+    height: auto;
     background-color: #FBFBFB;
     overflow: hidden;
 }
@@ -12,20 +12,7 @@
 }
 
 .container {
-    width: 1280px;
-    height: 1253px;
     margin-left: 61px;
-    border: 2px solid #EEEEEE;
-    border-radius: 5px;
-    background-color: #FFFFFF;
-}
-
-.inner {
-    width: 1280px;
-    height: auto;
-    margin: 0 auto;
-    margin-left: 300px;
-    margin-bottom: 203px;
     border: 2px solid #EEEEEE;
     border-radius: 5px;
     background-color: #FFFFFF;
@@ -379,11 +366,7 @@ select option[value=""][disabled] {
 }
 
 
-input[type="date"]::before {
-    content: attr(data-placeholder);
-    width: 100%;
-    color: #757575;
-}
+
 
 input[type="date"]:focus::before,
 input[type="date"]:valid::before {
@@ -412,4 +395,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border-radius: 5px;
     background-color: #0F2D6A;
     color: #FFFFFF;
+}
+
+
+input[type="date"]::before {
+    content: attr(placeholder);
+    width: 100%;
+    color: #757575;
 }

@@ -1,15 +1,55 @@
-    <div class="leader-modal" [ngClass]="data.buttonClass">
+<div class="leader-modal" [ngClass]="data.buttonClass">
+    <div class="large-modal LeaderModal">
+        <ng-container *ngIf="data.dynamicContent === 'LeaderData'">
+            <div class="modal-header">
+                <label>지도자 식별코드 검색</label>
+            </div>
+
+            <hr />
+
+            <div class="modal-body">
+                <label>성명</label>
+                <input type="text" id="LeaderModalInput" placeholder="이름을 입력하세요">
+                <button class="search_btn" onclick="searchLeaderList()">검색하기</button>
+            </div>
+            
+            <table class="leaderTable">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>식별코드</th>
+                        <th>성명</th>
+                    </tr>
+                </thead>
+                <tbody id="LeaderTableBody">
+                    <tr *ngFor="let leader of data.leaders; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ leader.leaderNo }}</td>
+                        <td>{{ leader.leaderName }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="buttons">
+                <button type="button" class="cancel_btn" (click)="closeDialog()">취소하기</button>
+                <button type="button" class="add_btn" onclick="noSelectedLeader()">등록하기</button>
+            </div>
+
+        </ng-container>
+    </div>
+
+    <div class="school-modal" [ngClass]="data.buttonClass">
         <div class="large-modal LeaderModal">
-            <ng-container *ngIf="data.dynamicContent === 'LeaderData'">
+            <ng-container *ngIf="data.dynamicContent === 'SchoolData'">
                 <div class="modal-header">
-                    <label>지도자 식별코드 검색</label>
+                    <label>학교 식별코드검색</label>
                 </div>
 
                 <hr />
 
                 <div class="modal-body">
-                    <label>성명</label>
-                    <input type="text" id="LeaderModalInput" placeholder="이름을 입력하세요">
+                    <label>학교명</label>
+                    <input type="text" id="LeaderModalInput" placeholder="학교명을 입력하세요">
                     <button class="search_btn" onclick="searchLeaderList()">검색하기</button>
                 </div>
 
@@ -17,11 +57,13 @@
                     <thead>
                         <tr>
                             <th>번호</th>
-                            <th>식별코드</th>
-                            <th>성명</th>
+                            <th>학교명</th>
                         </tr>
                     </thead>
-                    <tbody id="LeaderTableBody">
+                    <tbody id="SchoolTableBody">
+                        <tr *ngFor="let school of data.schools; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ school.schoolName }}</td>
                     </tbody>
                 </table>
 
@@ -32,39 +74,5 @@
 
             </ng-container>
         </div>
-
-        <div class="school-modal" [ngClass]="data.buttonClass">
-            <div class="large-modal LeaderModal">
-                <ng-container *ngIf="data.dynamicContent === 'SchoolData'">
-                    <div class="modal-header">
-                        <label>학교 식별코드검색</label>
-                    </div>
-
-                    <hr />
-    
-                    <div class="modal-body">
-                        <label>학교명</label>
-                        <input type="text" id="LeaderModalInput" placeholder="학교명을 입력하세요">
-                        <button class="search_btn" onclick="searchLeaderList()">검색하기</button>
-                    </div>
-    
-                    <table class="leaderTable">
-                        <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>학교명</th>
-                            </tr>
-                        </thead>
-                        <tbody id="SchoolTableBody">
-                        </tbody>
-                    </table>
-    
-                    <div class="buttons">
-                        <button type="button" class="cancel_btn" (click)="closeDialog()">취소하기</button>
-                        <button type="button" class="add_btn" onclick="noSelectedLeader()">등록하기</button>
-                    </div>
-    
-                </ng-container>
-            </div>
 
     </div>

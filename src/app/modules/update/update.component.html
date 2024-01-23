@@ -3,157 +3,159 @@
 
 
 <section class="registerPage">
-    <p>지도자 수정하기</p>
+    <p>지도자 등록하기</p>
     <div class="container">
-        <div class="profile">
-            <p>1. 일반 현황(2023년 01월 01일 기준)<small class="requiredFields">* 필수입력값 항목입니다.</small></p>
-            <div class="division-line"></div>
-            <div class="profile__inner">
-
-                <div class="profile__image">
-                    <div class="profile__imageArea">
-                        <img id="img" />
-                        <label class="profile__imageLabel" for="input-image">
-                            <p>사진 첨부하기</p>
-                        </label>
-                        <input type="file" id="input-image" style="display: none" />
-                    </div>
-                    <p>파일 크기는 MB 이하로 등록해주세요.</p>
-                </div>
-
-                <div class="input-wrap">
-
-                    <div class="leaderInfo">
-                        <div class="form-group">
-                            <div class="input__code">
-                                <p>식별코드</p>
-                                <input type="text" id="leaderNo" name="leaderNo" placeholder="식별코드를 선택해주세요." readonly />
-                                <button type="button">식별코드검색</button>
-                            </div>
-                            <div class="input__school">
-                                <p>학교명</p>
-                                <input type="text" id="schoolName" name="schoolName" placeholder="학교명을 선택해주세요."
-                                    readonly />
-                                <input type="hidden" id="schoolNo" name="schoolNo" />
-                                <button type="button" id="search_schoolName" >학교명검색</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="input__second">
-                        <div class="form-group">
-                            <div>
-                                <p>성명</p>
-                                <input type="text" value="" id="leaderName" name="leaderName" placeholder="이름을 입력하세요."
-                                    required />
-                            </div>
-                            <div class="input__birthday">
-                                <p>생년월일</p>
-                                <input type="date" id="birthday" name="birthday" data-placeholder="생년월일을 선택해주세요."
-                                    required aria-required="true" />
-                            </div>
-                            <div class="input__gender">
-                                <p>성별</p>
-                                <input type="radio" name="gender" value="M" />남자
-                                <input type="radio" name="gender" value="W" />여자
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="input__second">
-                        <div class="form-group">
-                            <div class="input__sports">
-                                <p>종목</p>
-                                <select id="sportsNo" name="sportsNo">
-                                    <option value="" disabled selected>종목을 선택해주세요</option>
-                                </select>
-                            </div>
-                            <div class="input__tel">
-                                <p>근무지 전화번호</p>
-                                <input type="tel" id="telNo1" name="telNo1" value="" placeholder="063" maxlength="3" /> -
-                                <input type="tel" id="telNo2" name="telNo2" value="" placeholder="123" maxlength="3" /> -
-                                <input type="tel" id="telNo3" name="telNo3" value="" placeholder="4567" maxlength="4" />
-                            </div>
-                            <div>
-                                <p>최초채용</p>
-                                <input type="date" id="empDT" name="empDT" data-placeholder="최초채용일을 선택해주세요." required
-                                    aria-required="true" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="workHistory">
-                <p>2. 근무 이력(전라북도교육청 소속 - 최초 채용일로부터)<small class="requiredFields">* 필수입력값 항목입니다.</small></p>
+        <div class="inner">
+            <div class="profile">
+                <p>1. 일반 현황(2023년 01월 01일 기준)<small class="requiredFields">* 필수입력값 항목입니다.</small></p>
                 <div class="division-line"></div>
-                <div class="workHistory__info">
-                    <p>&#8251; 현재 근무 중인 경우 근무 종료일을 입력하지 마십시오.</p>
-                    <table id="history_table" class="t">
-                        <thead>
-                            <tr>
-                                <th scope="col">근무기관</th>
-                                <th scope="col">근무시작일</th>
-                                <th scope="col">근무종료일</th>
-                                <th scope="col" colspan="2">종목</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><input type="text" id="historySchoolName" name="schoolName"
-                                        placeholder="학교명을 입력해주세요." /></td>
-                                <td><input type="date" id="historyStartDT" name="startDT"
-                                        data-placeholder="근무 시작일을 선택해주세요." required aria-required="true" /></td>
-                                <td><input type="date" id="historyEndDT" name="endDT" data-placeholder="근무 종료일을 선택해주세요."
-                                        required aria-required="true" /></td>
-                                <td>
-                                    <select id="historySportsNo" name="sportsNo" class="sel">
-                                        <option value="" disabled selected>종목을 선택해주세요.</option>
+                <div class="profile__inner">
+
+                    <div class="profile__image">
+                        <div class="profile__imageArea">
+                            <img id="img" />
+                            <label class="profile__imageLabel" for="input-image">
+                                <p>사진 첨부하기</p>
+                            </label>
+                            <input type="file" id="input-image" (change)="imageSizeCheck($event)" style="display: none" />
+                        </div>
+                        <p>파일 크기는 MB 이하로 등록해주세요.</p>
+                    </div>
+
+                    <div class="input-wrap">
+
+                        <div class="leaderInfo">
+                            <div class="form-group">
+                                <div class="input__code">
+                                    <p>식별코드</p>
+                                    <input type="text" id="leaderNo" name="leaderNo" placeholder="식별코드를 선택해주세요." readonly />
+                                    <button type="button" (click)="openLargeModal('LeaderData')">식별코드검색</button>
+                                </div>
+                                <div class="input__school">
+                                    <p>학교명</p>
+                                    <input type="text" id="schoolName" name="schoolName" placeholder="학교명을 선택해주세요." readonly />
+                                    <input type="hidden" id="schoolNo" name="schoolNo" />
+                                    <button type="button" id="search_schoolName" (click)="openLargeModal('SchoolData')">학교명검색</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input__second">
+                            <div class="form-group">
+                                <div>
+                                    <p>성명</p>
+                                    <input type="text" value="" id="leaderName" name="leaderName" placeholder="이름을 입력하세요." required />
+                                </div>
+                                <div class="input__birthday">
+                                    <p>생년월일</p>
+                                    <input type="date" id="birthday" name="birthday" placeholder="생년월일을 선택해주세요." required aria-required="true" />
+                                </div>
+                                <div class="input__gender">
+                                    <p>성별</p>
+                                    <input type="radio" name="gender" value="M" />남자
+                                    <input type="radio" name="gender" value="W" />여자
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input__second">
+                            <div class="form-group">
+                                <div class="input__sports">
+                                    <p>종목</p>
+                                    <select id="sportsNo" name="sportsNo">
+                                        <option value="" disabled selected>종목을 선택해주세요</option>
                                     </select>
-                                </td>
-                                <td><input type="button" class="add_btn" value="추가" /></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                </div>
+                                <div class="input__tel">
+                                    <p>근무지 전화번호</p>
+                                    <input type="tel" id="telNo1" name="telNo1" value="" placeholder="063" maxlength="3" />
+                                    -
+                                    <input type="tel" id="telNo2" name="telNo2" value="" placeholder="123" maxlength="3" />
+                                    -
+                                    <input type="tel" id="telNo3" name="telNo3" value="" placeholder="4567" maxlength="4" />
+                                </div>
+                                <div>
+                                    <p>최초채용</p>
+                                    <input type="date" id="empDT" name="empDT" placeholder="최초채용일을 선택해주세요." required aria-required="true" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workHistory">
+                    <p>2. 근무 이력(전라북도교육청 소속 - 최초 채용일로부터)<small class="requiredFields">* 필수입력값 항목입니다.</small></p>
+                    <div class="division-line"></div>
+                    <div class="workHistory__info">
+                        <p>&#8251; 현재 근무 중인 경우 근무 종료일을 입력하지 마십시오.</p>
+                        <table id="history_table" class="t">
+                            <thead>
+                                <tr>
+                                    <th scope="col">근무기관</th>
+                                    <th scope="col">근무시작일</th>
+                                    <th scope="col">근무종료일</th>
+                                    <th scope="col" colspan="2">종목</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let history of workHistoryList; let i = index">
+                                    <td><input type="text" [(ngModel)]="history.schoolName" placeholder="학교명을 입력해주세요." /></td>
+                                    <td><input type="date" [(ngModel)]="history.startDT" placeholder="근무 시작일을 선택해주세요." required aria-required="true" /></td>
+                                    <td><input type="date" [(ngModel)]="history.endDT" placeholder="근무 종료일을 선택해주세요." required aria-required="true" /></td>
+                                    <td>
+                                        <select [(ngModel)]="history.sportsNo" class="sel">
+                                            <option value="" disabled selected>종목을 선택해주세요.</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="button" class="add_btn" value="{{ i === 0 ? '추가' : '삭제' }}" (click)="i === 0 ? addWorkHistory() : removeWorkHistory(i)" />
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+                <div class="certificate">
+                    <p>3. 자격사항<small class="requiredFields">* 필수입력값 항목입니다.</small></p>
+                    <div class="division-line"></div>
+                    <div class="certificate__info">
+                        <table id="certificate_table" class="t">
+                            <thead>
+                                <tr>
+                                    <th scope="col">자격/면허</th>
+                                    <th scope="col">자격번호</th>
+                                    <th scope="col">취득일자</th>
+                                    <th scope="col" colspan="2">발급기관</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr *ngFor="let certificate of certificateList; let i = index">
+                                    <td><input type="text" [(ngModel)]="certificate.schoolName" placeholder="학교명을 입력해주세요." /></td>
+                                    <td><input type="date" [(ngModel)]="certificate.startDT" placeholder="근무 시작일을 선택해주세요." required aria-required="true" /></td>
+                                    <td><input type="date" [(ngModel)]="certificate.endDT" placeholder="근무 종료일을 선택해주세요." required aria-required="true" /></td>
+                                    <td>
+                                        <select [(ngModel)]="certificate.sportsNo" class="sel">
+                                            <option value="" disabled selected>종목을 선택해주세요.</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="button" class="add_btn" value="{{ i === 0 ? '추가' : '삭제' }}" (click)="i === 0 ? addCertificate() : removeCertificate(i)" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-
-            <div class="certificate">
-                <p>3. 자격사항<small class="requiredFields">* 필수입력값 항목입니다.</small></p>
-                <div class="division-line"></div>
-                <div class="certificate__info">
-                    <table id="certificate_table" class="t">
-                        <thead>
-                            <tr>
-                                <th scope="col">자격/면허</th>
-                                <th scope="col">자격번호</th>
-                                <th scope="col">취득일자</th>
-                                <th scope="col" colspan="2">발급기관</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <td><input type="text" id="certificateName" name="certificateName"
-                                        placeholder="자격을 입력해주세요." /></td>
-                                <td><input type="text" id="certificateNumber" name="certificateNumber"
-                                        placeholder="영문, 숫자만 입력해주세요." /></td>
-                                <td><input type="date" id="certificateDT" name="certificateDT"
-                                        data-placeholder="취득일자를 선택해주세요." required aria-required="true" /></td>
-                                <td><input type="text" id="organization" name="organization"
-                                        placeholder="발급기관을 입력해주세요." />
-                                </td>
-                                <td><input type="button" class="add_btn" value="추가" onclick="addCertificate()" /></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="buttons">
+                <button class="cancel_btn" type="button" (click)="openSmallModal('cancelBtn')">취소하기</button>
+                <button id="lSubmit" class="signup_btn" type="button" (click)="openSmallModal('updateBtn')">수정하기</button>
             </div>
-        </div>
-        <div class="buttons">
-            <button class="cancel_btn" type="button">취소하기</button>
-            <button id="lSubmit" class="signup_btn" type="button">저장하기</button>
         </div>
     </div>
+
 
 </section>
