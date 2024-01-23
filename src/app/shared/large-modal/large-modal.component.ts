@@ -12,15 +12,19 @@ export class LargeModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
-  // 서버에서 가져온 전체 데이터
+  // 서버에서 가져온 [ 지도자, 학교 ] 전체 데이터
   orgLeaders: any[] = [];
   orgSchools: any[] = [];
 
+  // [ 식별코드, 학교명 ] 입력값
   searchInput: string = '';
+
+  // 초기화
   ngOnInit() {
     this.orgLeaders = [...this.data.leaders];
     this.orgSchools = [...this.data.schools];
   }
+
   dataSearch(): void {
     let searchResult: any[];
 
@@ -50,11 +54,11 @@ export class LargeModalComponent {
   displayedSchoolColumns: string[] = ['Index', 'SchoolName'];
 
   selected: {
-    leader: any,
-    school: any
+    leader: string,
+    school: string
   } = {
-      leader: null,
-      school: null
+      leader: '',
+      school: ''
     };
 
   // 모달창 닫기

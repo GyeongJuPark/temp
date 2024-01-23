@@ -35,6 +35,8 @@ export class HomeComponent {
   goToDetailPage(leaderId: string): void {
     this.routes.navigate(['home/detail'], { queryParams: { id: leaderId } });
   }
+  
+  
 
   CustomDropdown(): void {
     const btn = this.el.nativeElement.querySelector('.btn-select');

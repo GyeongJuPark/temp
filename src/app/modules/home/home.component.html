@@ -19,8 +19,8 @@
             <p>전체 지도자 목록<sub></sub></p>
             <button class="btnDeleteLeader" type="button" onclick="btnDeleteSelectedLeaders()">삭제하기</button>
             <button class="add_leader" type="button" (click)="goToRegisterPage()">지도자 등록하기</button>
-
             <table id="leaderListTable">
+
                 <thead>
                     <tr>
                         <th scope="col"><input type="checkbox" id="selectAll" onchange="toggleAllCheckboxes()"></th>
@@ -32,6 +32,7 @@
                         <th scope="col">이력 정보 상세</th>
                     </tr>
                 </thead>
+
                 <tbody id="leaderListTableBody">
                     <tr *ngFor="let leader of leaderList">
                         <td><input type="checkbox"></td>
@@ -40,10 +41,11 @@
                         <td>{{ leader.leaderName }}</td>
                         <td>{{ leader.sportsNo }}</td>
                         <td>{{ leader.schoolNo }}</td>
-                        <td><input type="button" (click)="goToDetailPage(leader.leaderNo)" value="상세보기"/></td>
+                        <td><input type="button" (click)="goToDetailPage(leader.leaderNo)" value="상세조회" /></td>
                     </tr>
                 </tbody>
             </table>
+
             <div class="pagination">
                 <button onclick="goToFirstPage()">&lt;</button>
                 <button onclick="goToPrevPage()">&lt;</button>
@@ -57,3 +59,5 @@
 
 </section>
 <script src="../js/main.js"></script>
+
+

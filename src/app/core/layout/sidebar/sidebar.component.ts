@@ -12,5 +12,6 @@ export class SidebarComponent {
 
   goToIndexPage() :void {
     this.routes.navigate(["home"]);
+    // window.location.href = 'http://localhost:4200/home'
   }
 }

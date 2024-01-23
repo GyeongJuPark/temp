@@ -313,6 +313,16 @@ select {
     border: 0;
 }
 
+.t>tbody>tr>td>.add_btn:hover {
+    background-color: #FFFFFF;
+    border: 1px solid #238AF7;
+    color: #238AF7;
+}
+
+.deleted-row {
+    background-color: #ccc;
+}
+
 /* 취소하기, 등록하기 */
 .buttons {
     display: block;

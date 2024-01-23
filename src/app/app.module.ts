@@ -12,8 +12,10 @@ import { SmallModalComponent } from './shared/small-modal/small-modal.component'
 import { DetailComponent } from './modules/detail/detail.component';
 import { UpdateComponent } from './modules/update/update.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import {MatTableModule} from '@angular/material/table';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import {MatTableModule} from '@angular/material/table';
     MatDialogModule,
     FormsModule,
     HttpClientModule,
-    MatTableModule
+    MatTableModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
