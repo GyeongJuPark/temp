@@ -1,40 +1,43 @@
-/* 공통 스타일 */
-
 .leader-modal {
     width: 560px;
-    height: 980px;
+    height: 950px;
 }
 
-.leaderTable {
-    width: 480px;
-    height: 531px;
+/* 테이블 CSS */
+.scrollable-table-container {
+    max-height: 560px;
+    overflow-y: auto;
+}
+
+.leader-table {
+    min-width: 480px;
     margin: 0 auto;
     text-align: center;
-    border-collapse: collapse;
 }
 
-.leaderTable>thead {
-    height: 52px;
-}
-
-.leaderTable>thead>tr>th {
-    border-top: 2px solid #EEEEEE;
+.mat-mdc-table .mat-mdc-header-cell {
+    border-top: 4px solid #EEEEEE;
     border-bottom: 2px solid #EEEEEE;
     background-color: #FBFBFB;
-    font-weight: 500;
     color: #2C2C2C;
 }
 
-.leaderTable>tbody>tr>td {
-    height: 51px;
-    border-bottom: 1px solid #EEEEEE;
-    color: #212529;
+.mat-mdc-table .mat-mdc-header-cell,
+.mat-mdc-cell {
+    text-align: center;
+}
+
+.mat-elevation-z8 {
+    box-shadow: none;
+}
+
+.selected-row {
+    background-color: #F9F9F9;
 }
 
 .buttons {
     display: block;
-    margin-top: 68px;
-    margin-bottom: 76px;
+    margin-top: 60px;
     text-align: center;
 }
 

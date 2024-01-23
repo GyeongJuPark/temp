@@ -61,8 +61,10 @@
                             <div class="form-group">
                                 <div class="input__sports">
                                     <p>종목</p>
+                                    <!-- <tr *ngFor="let history of workHistoryList; let i = index"></tr> -->
                                     <select id="sportsNo" name="sportsNo">
                                         <option value="" disabled selected>종목을 선택해주세요</option>
+                                        <option *ngFor="let sport of sports" value={{sport.sportsNo}}>{{sport.sportsName}}</option>
                                     </select>
                                 </div>
                                 <div class="input__tel">
@@ -98,12 +100,13 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let history of workHistoryList; let i = index">
-                                    <td><input type="text" [(ngModel)]="history.schoolName" placeholder="학교명을 입력해주세요." /></td>
-                                    <td><input type="date" [(ngModel)]="history.startDT" placeholder="근무 시작일을 선택해주세요." required aria-required="true" /></td>
-                                    <td><input type="date" [(ngModel)]="history.endDT" placeholder="근무 종료일을 선택해주세요." required aria-required="true" /></td>
+                                    <td><input type="text" [ngModel]="history.schoolName" placeholder="학교명을 입력해주세요." /></td>
+                                    <td><input type="date" [ngModel]="history.startDT" placeholder="근무 시작일을 선택해주세요." required aria-required="true" /></td>
+                                    <td><input type="date" [ngModel]="history.endDT" placeholder="근무 종료일을 선택해주세요." required aria-required="true" /></td>
                                     <td>
                                         <select [(ngModel)]="history.sportsNo" class="sel">
                                             <option value="" disabled selected>종목을 선택해주세요.</option>
+                                            <option *ngFor="let sport of sports" value={{sport.sportsNo}}>{{sport.sportsName}}</option>
                                         </select>
                                     </td>
                                     <td>
@@ -132,14 +135,10 @@
 
                             <tbody>
                                 <tr *ngFor="let certificate of certificateList; let i = index">
-                                    <td><input type="text" [(ngModel)]="certificate.schoolName" placeholder="학교명을 입력해주세요." /></td>
-                                    <td><input type="date" [(ngModel)]="certificate.startDT" placeholder="근무 시작일을 선택해주세요." required aria-required="true" /></td>
-                                    <td><input type="date" [(ngModel)]="certificate.endDT" placeholder="근무 종료일을 선택해주세요." required aria-required="true" /></td>
-                                    <td>
-                                        <select [(ngModel)]="certificate.sportsNo" class="sel">
-                                            <option value="" disabled selected>종목을 선택해주세요.</option>
-                                        </select>
-                                    </td>
+                                    <td><input type="text" [ngModel]="certificate.schoolName" placeholder="자격을 입력해주세요." /></td>
+                                    <td><input type="text" [ngModel]="certificate.startDT" placeholder="영문, 숫자만 입력해주세요." required aria-required="true" /></td>
+                                    <td><input type="date" [ngModel]="certificate.endDT" placeholder="취득 일자를 선택해주세요." required aria-required="true" /></td>
+                                    <td><input type="text" [ngModel]="certificate.sportsNo" placeholder="발급기관을 입력해주세요." required aria-required="true" /></td>
                                     <td>
                                         <input type="button" class="add_btn" value="{{ i === 0 ? '추가' : '삭제' }}" (click)="i === 0 ? addCertificate() : removeCertificate(i)" />
                                     </td>

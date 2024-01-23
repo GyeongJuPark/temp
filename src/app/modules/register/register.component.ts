@@ -5,6 +5,7 @@ import { SmallModalComponent } from '../../shared/small-modal/small-modal.compon
 import { Leader } from '../../models/leader.model';
 import { RegisterService } from './register.service';
 import { School } from '../../models/school.model';
+import { Sport } from '../../models/sport.model';
 
 interface WorkHistoryItem {
   schoolName: string;
@@ -30,6 +31,7 @@ export class RegisterComponent implements OnInit {
 
   leaders: Leader[] = [];
   schools: School[] = [];
+  sports: Sport[] = [];
 
   constructor(private dialog: MatDialog, private registerService: RegisterService) { }
 
@@ -38,7 +40,6 @@ export class RegisterComponent implements OnInit {
       .subscribe({
         next: (leaders) => {
           this.leaders = leaders;
-          console.log(this.leaders);
         },
       });
 
@@ -46,7 +47,13 @@ export class RegisterComponent implements OnInit {
       .subscribe({
         next: (schools) => {
           this.schools = schools;
-          console.log(this.schools);
+        },
+      });
+
+      this.registerService.getAllSports() 
+      .subscribe({
+        next: (sports) => {
+          this.sports = sports;
         },
       });
   }
@@ -96,12 +103,14 @@ export class RegisterComponent implements OnInit {
     this.certificateList.push(newCertificate);
   }
 
+  // 식별코드, 학교명 모달창
   openLargeModal(buttonType: string) {
     const dialogRef = this.dialog.open(LargeModalComponent, {
       data: { dynamicContent: buttonType, leaders: this.leaders, schools: this.schools }
     });
   }
   
+  // 유효성 검사, 등록, 취소, 수정 ···
   openSmallModal(buttonType: string) {
     const dialogRef = this.dialog.open(SmallModalComponent, {
       data: { dynamicContent: buttonType}

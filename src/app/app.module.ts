@@ -13,6 +13,7 @@ import { DetailComponent } from './modules/detail/detail.component';
 import { UpdateComponent } from './modules/update/update.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     LayoutModule,
     MatDialogModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

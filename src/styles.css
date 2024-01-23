@@ -17,3 +17,7 @@ input, select, button {
     font-family: 'Pretendard-Regular' !important;
     font-style: normal !important;
 }
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+    overflow-y: visible;
+}

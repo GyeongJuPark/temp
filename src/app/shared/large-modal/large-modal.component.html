@@ -9,30 +9,37 @@
 
             <div class="modal-body">
                 <label>성명</label>
-                <input type="text" id="LeaderModalInput" placeholder="이름을 입력하세요">
-                <button class="search_btn" onclick="searchLeaderList()">검색하기</button>
+                <input type="text" id="LeaderModalInput" placeholder="이름을 입력하세요" [(ngModel)]="searchInput">
+                <button class="search_btn" (click)="dataSearch()">검색하기</button>
             </div>
-            
-            <table class="leaderTable">
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>식별코드</th>
-                        <th>성명</th>
+
+            <div class="scrollable-table-container">
+                <table mat-table [dataSource]="data.leaders" class="mat-elevation-z8 leader-table">
+                    <ng-container matColumnDef="Index">
+                        <th mat-header-cell *matHeaderCellDef>번호</th>
+                        <td mat-cell *matCellDef="let element; let i = index">{{i + 1}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="LeaderCode">
+                        <th mat-header-cell *matHeaderCellDef>식별코드</th>
+                        <td mat-cell *matCellDef="let element">{{element.leaderNo}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="LeaderName">
+                        <th mat-header-cell *matHeaderCellDef>성명</th>
+                        <td mat-cell *matCellDef="let element">{{element.leaderName}}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedLeaderColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedLeaderColumns;" [style.background-color]="isSelected('leader', row) ? '#F9F9F9' : 'transparent'"
+                        (click)="toggleSelect('leader', row)">
                     </tr>
-                </thead>
-                <tbody id="LeaderTableBody">
-                    <tr *ngFor="let leader of data.leaders; let i = index">
-                        <td>{{ i + 1 }}</td>
-                        <td>{{ leader.leaderNo }}</td>
-                        <td>{{ leader.leaderName }}</td>
-                    </tr>
-                </tbody>
-            </table>
+                </table>
+            </div>
 
             <div class="buttons">
                 <button type="button" class="cancel_btn" (click)="closeDialog()">취소하기</button>
-                <button type="button" class="add_btn" onclick="noSelectedLeader()">등록하기</button>
+                <button type="button" class="add_btn">등록하기</button>
             </div>
 
         </ng-container>
@@ -49,27 +56,32 @@
 
                 <div class="modal-body">
                     <label>학교명</label>
-                    <input type="text" id="LeaderModalInput" placeholder="학교명을 입력하세요">
-                    <button class="search_btn" onclick="searchLeaderList()">검색하기</button>
+                    <input type="text" id="LeaderModalInput" placeholder="이름을 입력하세요" [(ngModel)]="searchInput">
+                    <button class="search_btn" (click)="dataSearch()">검색하기</button>
                 </div>
 
-                <table class="leaderTable">
-                    <thead>
-                        <tr>
-                            <th>번호</th>
-                            <th>학교명</th>
+                <div class="scrollable-table-container">
+                    <table mat-table [dataSource]="data.schools" class="mat-elevation-z8 leader-table">
+                        <ng-container matColumnDef="Index">
+                            <th mat-header-cell *matHeaderCellDef>번호</th>
+                            <td mat-cell *matCellDef="let element; let i = index">{{i + 1}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="SchoolName">
+                            <th mat-header-cell *matHeaderCellDef>학교명</th>
+                            <td mat-cell *matCellDef="let element">{{element.schoolName}}</td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedSchoolColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedSchoolColumns;" [style.background-color]="isSelected('school', row) ? '#F9F9F9' : 'transparent'"
+                            (click)="toggleSelect('school', row)">
                         </tr>
-                    </thead>
-                    <tbody id="SchoolTableBody">
-                        <tr *ngFor="let school of data.schools; let i = index">
-                            <td>{{ i + 1 }}</td>
-                            <td>{{ school.schoolName }}</td>
-                    </tbody>
-                </table>
+                    </table>
+                </div>
 
                 <div class="buttons">
                     <button type="button" class="cancel_btn" (click)="closeDialog()">취소하기</button>
-                    <button type="button" class="add_btn" onclick="noSelectedLeader()">등록하기</button>
+                    <button type="button" class="add_btn">등록하기</button>
                 </div>
 
             </ng-container>
