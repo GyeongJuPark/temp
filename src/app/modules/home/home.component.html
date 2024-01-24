@@ -4,57 +4,76 @@
         <div class="search">
             <p>검색 조회</p>
             <div class="cont-select" (click)="CustomDropdown()">
-                <button class="btn-select">전체</button>
+                <button class="btn-select">{{ selectedSearchOption }}</button>
                 <ul class="list-member">
-                    <li><button type="button">전체</button></li>
-                    <li><button type="button">이름</button></li>
-                    <li><button type="button">종목</button></li>
+                    <li><button type="button" (click)="selectSearchOption('전체')">전체</button></li>
+                    <li><button type="button" (click)="selectSearchOption('이름')">이름</button></li>
+                    <li><button type="button" (click)="selectSearchOption('종목')">종목</button></li>
                 </ul>
             </div>
-            <input id="searchInput" type="text" placeholder="이름을 입력해주세요." />
-            <button type="submit" id="searchButton" onclick="searchInput()">검색하기</button>
+            <input id="searchInput" type="text" placeholder="이름을 입력해주세요." [(ngModel)]="searchInput" />
+            <button type="submit" id="searchButton" (click)="filterData()">검색하기</button>
         </div>
 
         <div class="allLeaderList">
             <p>전체 지도자 목록<sub></sub></p>
             <button class="btnDeleteLeader" type="button" onclick="btnDeleteSelectedLeaders()">삭제하기</button>
             <button class="add_leader" type="button" (click)="goToRegisterPage()">지도자 등록하기</button>
-            <div class="mat-elevation-z8">
+            <div class="mat-elevation-z8 leaderListTable">
                 <table mat-table [dataSource]="dataSource">
 
-                    <!-- Position Column -->
-                    <ng-container matColumnDef="position">
-                        <th mat-header-cell *matHeaderCellDef> No. </th>
-                        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox (change)="$event ? toggleAllRows() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                [aria-label]="checkboxLabel()">
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                            </mat-checkbox>
+                        </td>
                     </ng-container>
 
-                    <!-- Name Column -->
+                    <ng-container matColumnDef="index">
+                        <th mat-header-cell *matHeaderCellDef>번호</th>
+                        <td mat-cell *matCellDef="let element; let i = index">{{i + 1}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="code">
+                        <th mat-header-cell *matHeaderCellDef>식별코드</th>
+                        <td mat-cell *matCellDef="let element"> {{element.leaderNo}} </td>
+                    </ng-container>
+
                     <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef> Name </th>
-                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        <th mat-header-cell *matHeaderCellDef>성명</th>
+                        <td mat-cell *matCellDef="let element"> {{element.leaderName}} </td>
                     </ng-container>
 
-                    <!-- Weight Column -->
-                    <ng-container matColumnDef="weight">
-                        <th mat-header-cell *matHeaderCellDef> Weight </th>
-                        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                    <ng-container matColumnDef="sport">
+                        <th mat-header-cell *matHeaderCellDef>종목</th>
+                        <td mat-cell *matCellDef="let element"> {{element.sportsNo}} </td>
                     </ng-container>
 
-                    <!-- Symbol Column -->
-                    <ng-container matColumnDef="symbol">
-                        <th mat-header-cell *matHeaderCellDef> Symbol </th>
-                        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                    <ng-container matColumnDef="school">
+                        <th mat-header-cell *matHeaderCellDef>소속학교</th>
+                        <td mat-cell *matCellDef="let element"> {{element.schoolNo}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="detail">
+                        <th mat-header-cell *matHeaderCellDef>이력 정보 상세</th>
+                        <td mat-cell *matCellDef="let element"><input type='button' value='상세보기' (click)="goToDetailPage(element.leaderNo)" class="detailBtn" /></td>
                     </ng-container>
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+                    </tr>
                 </table>
 
-                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+                <mat-paginator [pageSizeOptions]="[10]" [showFirstLastButtons]="true" [hidePageSize]="true">
+
                 </mat-paginator>
             </div>
         </div>
     </div>
 
 </section>
-<script src="../js/main.js"></script>

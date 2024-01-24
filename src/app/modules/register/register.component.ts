@@ -14,7 +14,7 @@ import { Sport } from '../../models/sport.model';
 })
 
 export class RegisterComponent implements OnInit {
-
+  
   leaders: Leader[] = [];
   schools: School[] = [];
   sports: Sport[] = [];

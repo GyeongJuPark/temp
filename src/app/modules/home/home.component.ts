@@ -4,36 +4,7 @@ import { HomeService } from './home.service';
 import { LeaderWorkInfo } from '../../models/leaderWorkInfo.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-  { position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na' },
-  { position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg' },
-  { position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al' },
-  { position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si' },
-  { position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P' },
-  { position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S' },
-  { position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl' },
-  { position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar' },
-  { position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K' },
-  { position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca' },
-];
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-home',
@@ -41,15 +12,21 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['select', 'index', 'code', 'name', 'sport', 'school', 'detail'];
+  dataSource = new MatTableDataSource<LeaderWorkInfo>();
+
+  leaderList: LeaderWorkInfo[] = [];
+  selection = new SelectionModel<LeaderWorkInfo>(true, []);
+
+  searchInput: string = '';
+  selectedSearchOption: string = '전체';
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
-  leaderList: LeaderWorkInfo[] = [];
 
   constructor(
     private routes: Router,
@@ -63,9 +40,39 @@ export class HomeComponent {
       .subscribe({
         next: (leaders) => {
           this.leaderList = leaders;
-          console.log(this.leaderList);
+          this.dataSource.data = this.leaderList;
         },
       });
+  }
+
+  filterData() {
+    const searchTerm = this.searchInput.trim().toLowerCase();
+
+    let filteredData = [];
+    switch (this.selectedSearchOption) {
+      case '이름':
+        filteredData = this.leaderList.filter(leader => leader.leaderName.toLowerCase().includes(searchTerm));
+        break;
+      case '종목':
+        filteredData = this.leaderList.filter(leader => leader.sportsNo.includes(searchTerm));
+        break;
+      default:
+        filteredData = this.leaderList.filter(
+          leader => leader.leaderName.toLowerCase().includes(searchTerm) ||
+            leader.sportsNo.includes(searchTerm) ||
+            leader.leaderNo.includes(searchTerm) ||
+            leader.schoolNo.includes(searchTerm)
+        );
+        break;
+    }
+
+    this.dataSource.data = filteredData;
+    this.paginator.firstPage();
+  }
+
+  selectSearchOption(option: string) {
+    this.selectedSearchOption = option;
+    this.searchInput = '';
   }
 
   goToRegisterPage(): void {
@@ -75,8 +82,6 @@ export class HomeComponent {
   goToDetailPage(leaderId: string): void {
     this.routes.navigate(['home/detail'], { queryParams: { id: leaderId } });
   }
-
-
 
   CustomDropdown(): void {
     const btn = this.el.nativeElement.querySelector('.btn-select');
@@ -92,5 +97,27 @@ export class HomeComponent {
         btn.classList.remove('on');
       }
     });
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+
+    this.selection.select(...this.dataSource.data);
+  }
+
+  checkboxLabel(row?: LeaderWorkInfo): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.leaderNo + 1}`;
   }
 }

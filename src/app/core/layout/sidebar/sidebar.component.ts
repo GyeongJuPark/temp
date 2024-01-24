@@ -15,3 +15,5 @@ export class SidebarComponent {
     // window.location.href = 'http://localhost:4200/home'
   }
 }
+
+

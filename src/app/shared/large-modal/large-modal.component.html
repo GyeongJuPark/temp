@@ -12,7 +12,7 @@
                 <input type="text" id="LeaderModalInput" placeholder="이름을 입력하세요" [(ngModel)]="searchInput">
                 <button class="search_btn" (click)="dataSearch()">검색하기</button>
             </div>
-
+            
             <div class="scrollable-table-container">
                 <table mat-table [dataSource]="data.leaders" class="mat-elevation-z8 leader-table">
                     <ng-container matColumnDef="Index">
