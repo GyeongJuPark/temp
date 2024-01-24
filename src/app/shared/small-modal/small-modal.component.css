@@ -1,58 +1,57 @@
-/* 공통 스타일 */
-
-.cancel-modal {
+.small-modals {
+    position: relative;
     width: 400px;
     height: 253px;
     text-align: center;
 }
 
-.small-modal>h4 {
-    margin-top: 39px;
+.mat-mdc-dialog-actions {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+}
+
+.mdc-dialog__title {
+    margin-top: 20px;
     font-weight: 500;
     font-size: 24px;
     color: #0F2D6A;
 }
 
-.small-modal>p {
-    margin-top: 20px;
+.mdc-dialog__content {
     font-weight: 400;
     font-size: 16px;
     color: #212529;
 }
 
-.buttons {
-    display: block;
-    margin-top: 42px;
-    text-align: center;
-}
-
-.buttons>button {
+button {
     width: 88px;
     height: 42px;
     border-radius: 5px;
     font-size: 18px;
 }
 
-.buttons .cancel_btn {
+.cancelBtn {
     margin-right: 8px;
     border: 1px solid #0F2D6A;
     background-color: #FFFFFF;
     color: #0F2D6A;
 }
 
-.buttons .cancel_btn:hover {
+.cancelBtn:hover {
     border: 0;
     background-color: #0F2D6A;
     color: #FFFFFF;
 }
 
-.buttons .add_btn {
+.okBtn {
     border: 0;
     background-color: #0F2D6A;
     color: #FFFFFF;
 }
 
-.buttons .add_btn:hover {
+.okBtn:hover {
     border: 1px solid #0F2D6A;
     background-color: #FFFFFF;
     color: #0F2D6A;

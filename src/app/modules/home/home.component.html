@@ -19,45 +19,42 @@
             <p>전체 지도자 목록<sub></sub></p>
             <button class="btnDeleteLeader" type="button" onclick="btnDeleteSelectedLeaders()">삭제하기</button>
             <button class="add_leader" type="button" (click)="goToRegisterPage()">지도자 등록하기</button>
-            <table id="leaderListTable">
+            <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource">
 
-                <thead>
-                    <tr>
-                        <th scope="col"><input type="checkbox" id="selectAll" onchange="toggleAllCheckboxes()"></th>
-                        <th scope="col">번호</th>
-                        <th scope="col">식별코드</th>
-                        <th scope="col">이름</th>
-                        <th scope="col">종목</th>
-                        <th scope="col">소속학교</th>
-                        <th scope="col">이력 정보 상세</th>
-                    </tr>
-                </thead>
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef> No. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                    </ng-container>
 
-                <tbody id="leaderListTableBody">
-                    <tr *ngFor="let leader of leaderList">
-                        <td><input type="checkbox"></td>
-                        <td>{{ leaderList.indexOf(leader) + 1 }}</td>
-                        <td>{{ leader.leaderNo }}</td>
-                        <td>{{ leader.leaderName }}</td>
-                        <td>{{ leader.sportsNo }}</td>
-                        <td>{{ leader.schoolNo }}</td>
-                        <td><input type="button" (click)="goToDetailPage(leader.leaderNo)" value="상세조회" /></td>
-                    </tr>
-                </tbody>
-            </table>
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
 
-            <div class="pagination">
-                <button onclick="goToFirstPage()">&lt;</button>
-                <button onclick="goToPrevPage()">&lt;</button>
-                <button onclick="goToPage(1)"></button>
-                <button onclick="goToPage(2)"></button>
-                <button onclick="goToNextPage()">&gt;</button>
-                <button onclick="goToLastPage()">&gt;</button>
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="weight">
+                        <th mat-header-cell *matHeaderCellDef> Weight </th>
+                        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="symbol">
+                        <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+                </mat-paginator>
             </div>
         </div>
     </div>
 
 </section>
 <script src="../js/main.js"></script>
-
-
