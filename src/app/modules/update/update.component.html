@@ -60,6 +60,7 @@
                                     <p>종목</p>
                                     <select id="sportsNo" name="sportsNo">
                                         <option value="" disabled selected>종목을 선택해주세요</option>
+                                        <option *ngFor="let sport of sports" value={{sport.sportsNo}}>{{sport.sportsName}}</option>
                                     </select>
                                 </div>
                                 <div class="input__tel">
@@ -101,6 +102,7 @@
                                     <td>
                                         <select [(ngModel)]="history.sportsNo" class="sel">
                                             <option value="" disabled selected>종목을 선택해주세요.</option>
+                                            <option *ngFor="let sport of sports" value={{sport.sportsNo}}>{{sport.sportsName}}</option>
                                         </select>
                                     </td>
                                     <td>

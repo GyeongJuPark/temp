@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { SmallModalComponent } from '../../shared/small-modal/small-modal.component';
 import { LargeModalComponent } from '../../shared/large-modal/large-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Leader } from '../../models/leader.model';
+import { School } from '../../models/school.model';
+import { Sport } from '../../models/sport.model';
+import { CommonService } from '../common.service';
 
 interface WorkHistoryItem {
   schoolName: string;
@@ -23,7 +27,11 @@ interface CertificateItem {
   styleUrl: '../register/register.component.css'
 })
 export class UpdateComponent {
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private commonService: CommonService) { }
+
+  leaders: Leader[] = [];
+  schools: School[] = [];
+  sports: Sport[] = [];
 
   // 근무이력 기본값 설정
   workHistoryList: WorkHistoryItem[] = [
@@ -42,6 +50,30 @@ export class UpdateComponent {
     endDT: null,
     sportsNo: ''
   }];
+
+  // 초기화
+  ngOnInit(): void {
+    this.commonService.getAllLeaders()
+      .subscribe({
+        next: (leaders) => {
+          this.leaders = leaders;
+        },
+      });
+
+    this.commonService.getAllSchools()
+      .subscribe({
+        next: (schools) => {
+          this.schools = schools;
+        },
+      });
+
+    this.commonService.getAllSports()
+      .subscribe({
+        next: (sports) => {
+          this.sports = sports;
+        },
+      });
+  }
 
   removeWorkHistory(index: number) {
     this.workHistoryList.splice(index, 1);
@@ -73,11 +105,11 @@ export class UpdateComponent {
   // 식별코드, 학교명 모달창
   openLargeModal(buttonType: string) {
     const dialogRef = this.dialog.open(LargeModalComponent, {
-      data: { dynamicContent: buttonType }
+      data: { dynamicContent: buttonType, leaders: this.leaders, schools: this.schools }
     });
   }
 
-  // 유효성 검사, 취소, 등록, 수정 모달창
+  // 유효성 검사, 등록, 취소, 수정 ···
   openSmallModal(buttonType: string) {
     const dialogRef = this.dialog.open(SmallModalComponent, {
       data: { dynamicContent: buttonType }

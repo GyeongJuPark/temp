@@ -14,10 +14,14 @@ import { CommonService } from '../common.service';
 })
 
 export class RegisterComponent implements OnInit {
-  
+
   leaders: Leader[] = [];
   schools: School[] = [];
   sports: Sport[] = [];
+
+  leaderCode: string = '';
+  leaderName: string = '';
+  schoolName: string = '';
 
   // 근무 이력 배열
   workHistoryList: any[] = [{
@@ -72,7 +76,17 @@ export class RegisterComponent implements OnInit {
     const dialogRef = this.dialog.open(LargeModalComponent, {
       data: { dynamicContent: buttonType, leaders: this.leaders, schools: this.schools }
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (buttonType === 'LeaderData') {
+        this.leaderCode = result.leader.leaderNo;
+        this.leaderName = result.leader.leaderName;
+      } else if (buttonType === 'SchoolData' && result) {
+        this.schoolName = result.school.schoolName;
+      }
+    });
   }
+
 
   // 유효성 검사, 등록, 취소, 수정 ···
   openSmallModal(buttonType: string) {

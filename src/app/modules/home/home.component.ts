@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { SelectionModel } from '@angular/cdk/collections';
 import { CommonService } from '../common.service';
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-home',
@@ -81,14 +82,12 @@ export class HomeComponent {
 
   goToDetailPage(leaderId: string): void {
     const selectedLeader = this.leaderList.find(leader => leader.leaderNo === leaderId);
-    console.log(selectedLeader);
     if (selectedLeader) {
       this.routes.navigate(['home/detail', selectedLeader.leaderNo]);
     } else {
       console.error('Leader not found');
     }
   }
-
 
   CustomDropdown(): void {
     const btn = this.el.nativeElement.querySelector('.btn-select');

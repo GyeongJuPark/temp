@@ -1,4 +1,4 @@
-<section class="registerPage">
+<section class="registerPage" *ngIf="selectedLeader">
     <h4>지도자 상세정보</h4>
     <div class="container">
         <div class="profile">
@@ -7,7 +7,7 @@
             <div class="profileInfo__inner">
                 <div class="profile__image">
                     <div class="profile__imageArea">
-                        <img id="leaderImage" src="data:image/png;base64,LeaderImage" />
+                        <img id="leaderImage" [src]="'data:image/png;base64,' + selectedLeader.leaderImage" />
                         <input type="file" id="input-image" style="display: none" />
                     </div>
                     <p>파일 크기는 MB 이하로 등록해주세요.</p>
@@ -20,12 +20,12 @@
                             <div class="input__code">
                                 <label>식별코드</label>
                                 <hr>
-                                <p>{{leaderData.leaderNo}}</p>
+                                <p>{{selectedLeader.leaderNo}}</p>
                             </div>
                             <div class="input__school">
                                 <label>학교명</label>
                                 <hr>
-                                <p id="schoolName">{{leaderData.schoolNo}}</p>
+                                <p id="schoolName">{{selectedLeader.schoolNo}}</p>
                             </div>
                         </div>
                     </div>
@@ -35,17 +35,17 @@
                             <div class="input__name">
                                 <label>성명</label>
                                 <hr class="labelLine">
-                                <p>{{leaderData.leaderName}}</p>
+                                <p>{{selectedLeader.leaderName}}</p>
                             </div>
                             <div class="input__birthday">
                                 <label>생년월일</label>
                                 <hr class="labelLine">
-                                <p id="birthday">{{leaderData.birthday}}</p>
+                                <p id="birthday">{{selectedLeader.birthday | date: "yyyy-MM-dd"}}</p>
                             </div>
                             <div class="input__gender">
                                 <label>성별</label>
                                 <hr class="labelLine">
-                                <p id="gender"></p>
+                                <p id="gender">{{selectedLeader.gender}}</p>
                             </div>
                         </div>
                     </div>
@@ -55,17 +55,17 @@
                             <div class="input__sports">
                                 <label>종목</label>
                                 <hr class="labelLine">
-                                <p id="sportName">{{leaderData.sportsNo}}</p>
+                                <p id="sportName">{{selectedLeader.sportsNo}}</p>
                             </div>
                             <div class="input__tel">
                                 <label>근무지 전화번호</label>
                                 <hr class="labelLine">
-                                <p id="telNo"></p>
+                                <p id="telNo">{{selectedLeader.telNo}}</p>
                             </div>
                             <div>
                                 <label>최초채용</label>
                                 <hr class="labelLine">
-                                <p id="empDT"></p>
+                                <p id="empDT">{{selectedLeader.empDT | date: "yyyy-MM-dd"}}</p>
                             </div>
                         </div>
                     </div>
@@ -89,11 +89,11 @@
                             </tr>
                         </thead>
                         <tbody id="historyInfoTableBody">
-                            <tr>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
+                            <tr *ngFor="let history of selectedLeader.histories">
+                                <td>{{ history.schoolName }}</td>
+                                <td>{{ history.startDT | date: "yyyy-MM-dd" }}</td>
+                                <td>{{ history.endDT | date: "yyyy-MM-dd" }}</td>
+                                <td>{{ history.sportsNo }}</td>
                             </tr>
                         </tbody>
 
@@ -114,13 +114,14 @@
                                 <th scope="col">발급기관</th>
                             </tr>
                         </thead>
-                            
+
                         <tbody id="certificateInfoTableBody">
-                            <tr>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
+                            <tr *ngFor="let certificate of selectedLeader.certificates">
+                                <td>{{ certificate.certificateName }}</td>
+                                <td>{{ certificate.certificateNo }}</td>
+                                <td>{{ certificate.certificateDT | date: "yyyy-MM-dd" }}</td>
+                                <td>{{ certificate.organization }}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -132,4 +133,3 @@
         </div>
     </div>
 </section>
-

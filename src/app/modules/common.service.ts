@@ -20,6 +20,11 @@ export class CommonService {
     return this.http.get<Leader[]>(this.baseUrl + '/api/leaders');
   }
 
+  // 지도자 전체
+  getLeaderList(): Observable<LeaderWorkInfo[]> {
+    return this.http.get<LeaderWorkInfo[]>(this.baseUrl + '/api/leaders/list')
+  }
+
   // 학교
   getAllSchools(): Observable<School[]> {
     return this.http.get<School[]>(this.baseUrl + '/api/schools');
@@ -30,10 +35,7 @@ export class CommonService {
     return this.http.get<Sport[]>(this.baseUrl + '/api/sports');
   }
 
-  // 지도자 전체
-  getLeaderList(): Observable<LeaderWorkInfo[]> {
-    return this.http.get<LeaderWorkInfo[]>(this.baseUrl + '/api/leaders/list')
-  }
-  
+
+
 }
 

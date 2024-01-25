@@ -70,9 +70,15 @@ export class LargeModalComponent {
     return type === 'leader'
       ? this.selected.leader === element
       : this.selected.school === element;
+
   }
 
   toggleSelect(type: 'leader' | 'school', element: any): void {
     this.selected[type] = this.selected[type] === element ? null : element;
   }
+  
+  registerData(): void {
+    this.dialogRef.close(this.selected);
+  }
+  
 }

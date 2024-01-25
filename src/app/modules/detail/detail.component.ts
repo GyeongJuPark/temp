@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommonService } from '../common.service';
+import { LeaderWorkInfo } from '../../models/leaderWorkInfo.model';
 
 @Component({
   selector: 'app-detail',
@@ -10,27 +12,28 @@ import { ActivatedRoute, Router } from '@angular/router';
   ]
 })
 export class DetailComponent implements OnInit {
-  private readonly leaderNo: string;
-  leaderData: any;
 
+  private readonly leaderNo: string;
+  leaderData: LeaderWorkInfo[] = [];
+  selectedLeader: any;
   constructor(
-    private routes: Router, 
-    private route: ActivatedRoute) {
+    private routes: Router,
+    private route: ActivatedRoute,
+    private commonServie: CommonService
+  ) {
 
     this.leaderNo = this.route.snapshot.params['leaderNo'];
   }
 
   ngOnInit(): void {
-    
-    console.log(`leaderNo: ${this.leaderNo}`);
-
-    // this.route.queryParams.subscribe(params => {
-    //   if (params['leaderNo']) {
-    //     this.leaderData = JSON.parse(params['leaderNo']);
-    //     console.log('Leader Data:', this.leaderData);
-    //   }
-    // });
-    
+    this.commonServie.getLeaderList()
+      .subscribe({
+        next: (leaders) => {
+          this.leaderData = leaders;
+          this.selectedLeader = this.leaderData.find(leader => leader.leaderNo === this.leaderNo);
+          console.log(this.selectedLeader)
+        }
+      });
   }
 
   goToIndexPage(): void {

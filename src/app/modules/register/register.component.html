@@ -21,12 +21,12 @@
                             <div class="form-group">
                                 <div class="input__code">
                                     <p>식별코드</p>
-                                    <input type="text" id="leaderNo" name="leaderNo" placeholder="식별코드를 선택해주세요." readonly />
+                                    <input type="text" id="leaderNo" name="leaderNo" placeholder="식별코드를 선택해주세요." [value]="leaderCode" readonly />
                                     <button type="button" (click)="openLargeModal('LeaderData')">식별코드검색</button>
                                 </div>
                                 <div class="input__school">
                                     <p>학교명</p>
-                                    <input type="text" id="schoolName" name="schoolName" placeholder="학교명을 선택해주세요." readonly />
+                                    <input type="text" id="schoolName" name="schoolName" placeholder="학교명을 선택해주세요." [value]="schoolName" readonly />
                                     <input type="hidden" id="schoolNo" name="schoolNo" />
                                     <button type="button" id="search_schoolName" (click)="openLargeModal('SchoolData')">학교명검색</button>
                                 </div>
@@ -37,7 +37,7 @@
                             <div class="form-group">
                                 <div>
                                     <p>성명</p>
-                                    <input type="text" value="" id="leaderName" name="leaderName" placeholder="이름을 입력하세요." required />
+                                    <input type="text" value="" id="leaderName" name="leaderName" placeholder="이름을 입력하세요." [value]="leaderName" required />
                                 </div>
                                 <div class="input__birthday">
                                     <p>생년월일</p>
@@ -142,7 +142,7 @@
             </div>
             <div class="buttons">
                 <button class="cancel_btn" type="button" (click)="openSmallModal('cancel')">취소하기</button>
-                <button id="lSubmit" class="signup_btn" type="button" (click)="openSmallModal('register')">등록하기</button>
+                <button id="lSubmit" class="signup_btn" type="submit">등록하기</button>
                 <button id="lSubmit" class="signup_btn" type="button" (click)="openSmallModal('validation')">테스트</button>
             </div>
         </div>

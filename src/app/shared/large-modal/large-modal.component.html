@@ -12,7 +12,7 @@
                 <input type="text" id="LeaderModalInput" placeholder="이름을 입력하세요" [(ngModel)]="searchInput">
                 <button class="search_btn" (click)="dataSearch()">검색하기</button>
             </div>
-            
+
             <div class="scrollable-table-container">
                 <table mat-table [dataSource]="data.leaders" class="mat-elevation-z8 leader-table">
                     <ng-container matColumnDef="Index">
@@ -39,8 +39,9 @@
 
             <div class="buttons">
                 <button type="button" class="cancel_btn" (click)="closeDialog()">취소하기</button>
-                <button type="button" class="add_btn">등록하기</button>
+                <button type="button" class="add_btn" (click)="registerData()">등록하기</button>
             </div>
+
 
         </ng-container>
     </div>
@@ -81,7 +82,7 @@
 
                 <div class="buttons">
                     <button type="button" class="cancel_btn" (click)="closeDialog()">취소하기</button>
-                    <button type="button" class="add_btn">등록하기</button>
+                    <button type="button" class="add_btn" (click)="registerData()">등록하기</button>
                 </div>
 
             </ng-container>
