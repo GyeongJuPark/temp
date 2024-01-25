@@ -3,9 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { LargeModalComponent } from '../../shared/large-modal/large-modal.component';
 import { SmallModalComponent } from '../../shared/small-modal/small-modal.component';
 import { Leader } from '../../models/leader.model';
-import { RegisterService } from './register.service';
 import { School } from '../../models/school.model';
 import { Sport } from '../../models/sport.model';
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'app-register',
@@ -41,25 +41,25 @@ export class RegisterComponent implements OnInit {
   }];
 
 
-  constructor(private dialog: MatDialog, private registerService: RegisterService) { }
+  constructor(private dialog: MatDialog, private commonService: CommonService) { }
 
   // 초기화
   ngOnInit(): void {
-    this.registerService.getAllLeaders()
+    this.commonService.getAllLeaders()
       .subscribe({
         next: (leaders) => {
           this.leaders = leaders;
         },
       });
 
-    this.registerService.getAllSchools()
+    this.commonService.getAllSchools()
       .subscribe({
         next: (schools) => {
           this.schools = schools;
         },
       });
 
-    this.registerService.getAllSports()
+    this.commonService.getAllSports()
       .subscribe({
         next: (sports) => {
           this.sports = sports;

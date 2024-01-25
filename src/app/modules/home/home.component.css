@@ -223,7 +223,17 @@
     border-top: 2px solid #EEEEEE;
     border-bottom: 2px solid #EEEEEE;
     background-color: #FBFBFB;
+    text-align: center;
+    font-weight: 500;
+    font-size: 14px;
+    color: #5B5B5B;
+}
+
+.mat-mdc-table .mat-mdc-cell {
+    font-weight: 500;
+    font-size: 14px;
     color: #2C2C2C;
+    text-align: center;
 }
 
 .mat-mdc-paginator {
@@ -264,15 +274,6 @@
     font-size: 14px;
     color: #2C2C2C;
 }
-
-/* 체크박스 */
-#leaderListTable>tbody>tr>td>input[type="checkbox"] {
-    width: 13px;
-    height: 13px;
-    margin: 0 auto;
-}
-
-
 
 #leaderListTable>tbody>tr>td>input[type="button"]:hover {
     background-color: #0F2D6A;
@@ -325,3 +326,24 @@
     background-color: #0F2D6A;
     color: #F2F4F5;
 }
+
+
+
+.pagination {
+    margin-top: 10px;
+}
+
+.pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.pagination button.active {
+    background-color: #007bff;
+    color: #fff;
+}
+

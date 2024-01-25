@@ -3,4 +3,6 @@ export interface LeaderWorkInfo {
     leaderName: string;
     sportsNo: string;
     schoolNo: string;
+    birthday: Date;
+    gender: string;
 };

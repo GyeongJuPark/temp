@@ -1,10 +1,10 @@
 import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { HomeService } from './home.service';
 import { LeaderWorkInfo } from '../../models/leaderWorkInfo.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { SelectionModel } from '@angular/cdk/collections';
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +21,7 @@ export class HomeComponent {
   searchInput: string = '';
   selectedSearchOption: string = '전체';
 
-
+  isDeleteButtonActive: boolean = false;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
@@ -32,11 +32,11 @@ export class HomeComponent {
     private routes: Router,
     private el: ElementRef,
     private renderer: Renderer2,
-    private homeService: HomeService,
+    private commonService: CommonService,
   ) { }
 
   ngOnInit(): void {
-    this.homeService.getLeaderList()
+    this.commonService.getLeaderList()
       .subscribe({
         next: (leaders) => {
           this.leaderList = leaders;
@@ -80,8 +80,15 @@ export class HomeComponent {
   }
 
   goToDetailPage(leaderId: string): void {
-    this.routes.navigate(['home/detail'], { queryParams: { id: leaderId } });
+    const selectedLeader = this.leaderList.find(leader => leader.leaderNo === leaderId);
+    console.log(selectedLeader);
+    if (selectedLeader) {
+      this.routes.navigate(['home/detail', selectedLeader.leaderNo]);
+    } else {
+      console.error('Leader not found');
+    }
   }
+
 
   CustomDropdown(): void {
     const btn = this.el.nativeElement.querySelector('.btn-select');
@@ -104,15 +111,21 @@ export class HomeComponent {
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
-
   toggleAllRows() {
     if (this.isAllSelected()) {
       this.selection.clear();
-      return;
+    } else {
+      this.selection.select(...this.dataSource.data);
     }
 
-    this.selection.select(...this.dataSource.data);
+    this.isDeleteButtonActive = this.selection.hasValue();
   }
+
+  selectionToggle(row: LeaderWorkInfo) {
+    this.selection.toggle(row);
+    this.isDeleteButtonActive = this.selection.hasValue();
+  }
+
 
   checkboxLabel(row?: LeaderWorkInfo): string {
     if (!row) {
@@ -120,4 +133,6 @@ export class HomeComponent {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.leaderNo + 1}`;
   }
+
+
 }

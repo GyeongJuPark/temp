@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-detail',
@@ -9,9 +9,29 @@ import { Router } from '@angular/router';
     '../register/register.component.css'
   ]
 })
-export class DetailComponent {
+export class DetailComponent implements OnInit {
+  private readonly leaderNo: string;
+  leaderData: any;
 
-  constructor(private routes: Router) {  }
+  constructor(
+    private routes: Router, 
+    private route: ActivatedRoute) {
+
+    this.leaderNo = this.route.snapshot.params['leaderNo'];
+  }
+
+  ngOnInit(): void {
+    
+    console.log(`leaderNo: ${this.leaderNo}`);
+
+    // this.route.queryParams.subscribe(params => {
+    //   if (params['leaderNo']) {
+    //     this.leaderData = JSON.parse(params['leaderNo']);
+    //     console.log('Leader Data:', this.leaderData);
+    //   }
+    // });
+    
+  }
 
   goToIndexPage(): void {
     this.routes.navigate(["home"]);
