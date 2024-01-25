@@ -23,6 +23,7 @@ export class HomeComponent {
   selectedSearchOption: string = '전체';
 
   isDeleteButtonActive: boolean = false;
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
@@ -132,6 +133,5 @@ export class HomeComponent {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.leaderNo + 1}`;
   }
-
 
 }

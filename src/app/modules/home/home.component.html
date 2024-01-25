@@ -20,6 +20,7 @@
             <button class="btnDeleteLeader" type="button" [class.active]="isDeleteButtonActive" [disabled]="!isDeleteButtonActive">삭제하기</button>
 
             <button class="add_leader" type="button" (click)="goToRegisterPage()">지도자 등록하기</button>
+
             <div class="mat-elevation-z8 leaderListTable">
 
                 <table mat-table [dataSource]="dataSource">
@@ -73,7 +74,9 @@
 
                 <mat-paginator [length]="dataSource.data.length" [pageSize]="10" showFirstLastButtons hidePageSize>
                 </mat-paginator>
+
             </div>
+
         </div>
     </div>
 
