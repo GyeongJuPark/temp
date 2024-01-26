@@ -1,0 +1,17 @@
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="date"]::-webkit-inner-spin-button {
+    display: none;
+    appearance: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: rgba(0, 0, 0, 0);
+    display: block;
+    background: url('../../../assets/images/calender.svg') no-repeat 98% 50%;
+    width: 13px;
+    height: 13px;
+}
+
+select option[value=""][disabled] {
+    display: none;
+}

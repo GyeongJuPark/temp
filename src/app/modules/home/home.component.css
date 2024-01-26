@@ -135,7 +135,7 @@
 
 .allLeaderList {
     width: 1280px;
-    height: 751px;
+    height: auto;
     border: 2px solid #EEEEEE;
     border-radius: 10px;
     background-color: #FFFFFF;
@@ -297,12 +297,6 @@
     cursor: pointer;
 }
 
-.pagination button[disabled] {
-    cursor: not-allowed;
-    background-color: #F5F5F5;
-    color: #BDBDBD;
-}
-
 .pagination button.active,
 .pagination button:hover {
     background-color: #0F2D6A;
@@ -326,3 +320,6 @@
     background-color: #0F2D6A;
     color: #F2F4F5;
 }
+
+
+

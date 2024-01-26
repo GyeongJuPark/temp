@@ -11,7 +11,11 @@ export class SidebarComponent {
   constructor(private routes: Router){ }
 
   goToIndexPage() :void {
-    this.routes.navigate(["home"]);
+    this.routes.navigate(["home"])
+      .then(() => {
+        window.location.reload();
+      })
+
     // window.location.href = 'http://localhost:4200/home'
   }
 }

@@ -40,8 +40,18 @@ export class DetailComponent implements OnInit {
     this.routes.navigate(["home"]);
   }
 
-  goToUpdatePage(): void {
-    this.routes.navigate(["home/update"])
+
+  // goToDetailPage(leaderId: string): void {
+  //   const selectedLeader = this.leaderList.find(leader => leader.leaderNo === leaderId);
+  //   if (selectedLeader) {
+  //     this.routes.navigate(['home/detail', selectedLeader.leaderNo]);
+  //   } else {
+  //     console.error('Leader not found');
+  //   }
+  // }
+  
+  goToUpdatePage(leaderId: string): void {
+    this.routes.navigate(["home/update", leaderId]);
   }
 
   // 이미지 크기 검사

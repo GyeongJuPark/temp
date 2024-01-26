@@ -6,6 +6,8 @@ import { Leader } from '../../models/leader.model';
 import { School } from '../../models/school.model';
 import { Sport } from '../../models/sport.model';
 import { CommonService } from '../common.service';
+import { LeaderWorkInfo } from '../../models/leaderWorkInfo.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 interface WorkHistoryItem {
   schoolName: string;
@@ -24,10 +26,15 @@ interface CertificateItem {
 @Component({
   selector: 'app-update',
   templateUrl: './update.component.html',
-  styleUrl: '../register/register.component.css'
+  styleUrls: ['../register/register.component.css', './update.component.css']
 })
 export class UpdateComponent {
-  constructor(private dialog: MatDialog, private commonService: CommonService) { }
+
+  selectedLeader: any;
+
+  constructor(private route: ActivatedRoute, private dialog: MatDialog, private commonService: CommonService) {
+    this.leaderNo = this.route.snapshot.params['leaderNo'];
+  }
 
   leaders: Leader[] = [];
   schools: School[] = [];
@@ -50,9 +57,23 @@ export class UpdateComponent {
     endDT: null,
     sportsNo: ''
   }];
+  private readonly leaderNo: string;
+  leaderData: LeaderWorkInfo[] = [];
 
   // 초기화
   ngOnInit(): void {
+    this.commonService.getLeaderList()
+      .subscribe({
+        next: (leaders) => {
+          this.leaderData = leaders;
+          this.selectedLeader = this.leaderData.find(leader => leader.leaderNo === this.leaderNo);
+          const telNoParts = this.selectedLeader.telNo.split('-');
+          this.selectedLeader.telNo = telNoParts[0];
+          this.selectedLeader.telNo2 = telNoParts[1];
+          this.selectedLeader.telNo3 = telNoParts[2];
+        }
+      });
+
     this.commonService.getAllLeaders()
       .subscribe({
         next: (leaders) => {
@@ -73,6 +94,7 @@ export class UpdateComponent {
           this.sports = sports;
         },
       });
+    this.setTelNoValues();
   }
 
   removeWorkHistory(index: number) {
@@ -116,8 +138,6 @@ export class UpdateComponent {
     });
   }
 
-
-
   // 이미지 크기 검사
   base64ImageData: string = '';
 
@@ -150,5 +170,9 @@ export class UpdateComponent {
 
       fileReader.readAsDataURL(imageFile);
     }
+  }
+
+  setTelNoValues() {
+
   }
 }

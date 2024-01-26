@@ -134,4 +134,16 @@ export class HomeComponent {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.leaderNo + 1}`;
   }
 
+  getPages(): number[] {
+    // dataSource.data 배열의 길이를 페이지데이터 수로 나누어 전체 페이지 수를 계산
+    const totalPages = Math.ceil(this.dataSource.data.length / this.paginator.pageSize);
+
+    // 페이지 수만큼의 배열을 생성, 각 요소에 1부터 시작하는 페이지 번호 할당
+    return Array.from({ length: totalPages }, (_, index) => index + 1);
+  }
+
+  changePage(page: number): void {
+    this.paginator.pageIndex = page - 1;
+    this.paginator._changePageSize(this.paginator.pageSize);
+  }
 }

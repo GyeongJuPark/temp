@@ -45,7 +45,7 @@
                             <div class="input__gender">
                                 <label>성별</label>
                                 <hr class="labelLine">
-                                <p id="gender">{{selectedLeader.gender}}</p>
+                                <p id="gender">{{selectedLeader.gender === 'M' ? '남자' : '여자'}}</p>
                             </div>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
         </div>
         <div class="buttons">
             <button class="cancel_btn" type="button" (click)="goToIndexPage()">목록으로</button>
-            <button id="lSubmit" class="signup_btn" type="button" (click)="goToUpdatePage()">수정하기</button>
+            <button id="lSubmit" class="signup_btn" type="button" (click)="goToUpdatePage(selectedLeader.leaderNo)">수정하기</button>
         </div>
     </div>
 </section>
