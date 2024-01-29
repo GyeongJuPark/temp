@@ -94,7 +94,6 @@ export class UpdateComponent {
           this.sports = sports;
         },
       });
-    this.setTelNoValues();
   }
 
   removeWorkHistory(index: number) {
@@ -172,7 +171,13 @@ export class UpdateComponent {
     }
   }
 
-  setTelNoValues() {
-
+  onUpdateLeader() {
+    const leaderNo = this.selectedLeader.leaderNo;
+    this.commonService.modLeader(leaderNo)
+    .subscribe({
+      next: (response) => {
+        console.log(response);
+      }
+    })
   }
 }

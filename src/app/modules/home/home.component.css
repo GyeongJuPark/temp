@@ -74,8 +74,6 @@
     color: #212529;
 }
 
-
-
 /* 검색 조회 */
 .search {
     display: flex;
@@ -285,7 +283,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 20px;
+    margin: 20px auto;
     text-align: center;
 }
 
@@ -303,7 +301,16 @@
     color: #FFFFFF;
 }
 
+.pagination button:not(.test):hover {
+    border-radius: 50%;
+    background-color: #DDDDDD;
+}
 
+.pagination button:not(.test).active {
+    border-radius: 50%;
+    background-color: #DDDDDD;
+    color: #0F2D6A;
+}
 
 /* ------------------------------------------- */
 
@@ -320,6 +327,3 @@
     background-color: #0F2D6A;
     color: #F2F4F5;
 }
-
-
-

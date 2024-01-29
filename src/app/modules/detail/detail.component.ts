@@ -39,16 +39,6 @@ export class DetailComponent implements OnInit {
   goToIndexPage(): void {
     this.routes.navigate(["home"]);
   }
-
-
-  // goToDetailPage(leaderId: string): void {
-  //   const selectedLeader = this.leaderList.find(leader => leader.leaderNo === leaderId);
-  //   if (selectedLeader) {
-  //     this.routes.navigate(['home/detail', selectedLeader.leaderNo]);
-  //   } else {
-  //     console.error('Leader not found');
-  //   }
-  // }
   
   goToUpdatePage(leaderId: string): void {
     this.routes.navigate(["home/update", leaderId]);

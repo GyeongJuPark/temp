@@ -5,7 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { SelectionModel } from '@angular/cdk/collections';
 import { CommonService } from '../common.service';
-import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-home',
@@ -24,6 +23,9 @@ export class HomeComponent {
 
   isDeleteButtonActive: boolean = false;
 
+  currentPage = 1;
+  pageSize = 10;
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
@@ -38,29 +40,81 @@ export class HomeComponent {
   ) { }
 
   ngOnInit(): void {
-    this.commonService.getLeaderList()
-      .subscribe({
-        next: (leaders) => {
-          this.leaderList = leaders;
-          this.dataSource.data = this.leaderList;
-        },
-      });
+    this.commonService.getLeaderList().subscribe({
+      next: (leaders) => {
+        this.leaderList = leaders;
+        this.updateDataSource();
+      },
+    });
+  }
+
+  getPages(): number[] {
+    const totalPages = Math.ceil(this.leaderList.length / this.pageSize);
+    const startPage = Math.max(1, this.currentPage - 2);
+    const endPage = Math.min(totalPages, startPage + 4);
+    return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
+  }
+
+
+  changePage(page: number): void {
+    this.currentPage = page;
+    this.updateDataSource();
+  }
+
+  isFirstPage(): boolean {
+    return this.currentPage === 1;
+  }
+
+  isLastPage(): boolean {
+    const totalPages = Math.ceil(this.leaderList.length / this.pageSize);
+    return this.currentPage === totalPages;
+  }
+
+  goToFirstPage(): void {
+    this.currentPage = 1;
+    this.updateDataSource();
+  }
+
+  goToPreviousPage(): void {
+    if (!this.isFirstPage()) {
+      this.currentPage--;
+      this.updateDataSource();
+    }
+  }
+
+  goToNextPage(): void {
+    if (!this.isLastPage()) {
+      this.currentPage++;
+      this.updateDataSource();
+    }
+  }
+
+  goToLastPage(): void {
+    const totalPages = Math.ceil(this.leaderList.length / this.pageSize);
+    this.currentPage = totalPages;
+    this.updateDataSource();
+  }
+
+  updateDataSource(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.dataSource.data = this.leaderList.slice(startIndex, endIndex);
   }
 
   filterData() {
-    const searchTerm = this.searchInput.trim().toLowerCase();
+    const searchTerm = this.searchInput.trim();
 
     let filteredData = [];
     switch (this.selectedSearchOption) {
       case '이름':
-        filteredData = this.leaderList.filter(leader => leader.leaderName.toLowerCase().includes(searchTerm));
+        filteredData = this.leaderList.filter(leader => leader.leaderName.includes(searchTerm));
         break;
       case '종목':
         filteredData = this.leaderList.filter(leader => leader.sportsNo.includes(searchTerm));
         break;
       default:
         filteredData = this.leaderList.filter(
-          leader => leader.leaderName.toLowerCase().includes(searchTerm) ||
+          leader => leader.leaderName.includes(searchTerm) ||
             leader.sportsNo.includes(searchTerm) ||
             leader.leaderNo.includes(searchTerm) ||
             leader.schoolNo.includes(searchTerm)
@@ -71,6 +125,7 @@ export class HomeComponent {
     this.dataSource.data = filteredData;
     this.paginator.firstPage();
   }
+
 
   selectSearchOption(option: string) {
     this.selectedSearchOption = option;
@@ -126,7 +181,6 @@ export class HomeComponent {
     this.isDeleteButtonActive = this.selection.hasValue();
   }
 
-
   checkboxLabel(row?: LeaderWorkInfo): string {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
@@ -134,16 +188,18 @@ export class HomeComponent {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.leaderNo + 1}`;
   }
 
-  getPages(): number[] {
-    // dataSource.data 배열의 길이를 페이지데이터 수로 나누어 전체 페이지 수를 계산
-    const totalPages = Math.ceil(this.dataSource.data.length / this.paginator.pageSize);
-
-    // 페이지 수만큼의 배열을 생성, 각 요소에 1부터 시작하는 페이지 번호 할당
-    return Array.from({ length: totalPages }, (_, index) => index + 1);
+  onDeleteLeader() {
+    // 1. 선택한 체크박스의 LeaderNo 값을 가져온다.
+    const selectedLeaderIds = this.selection.selected.map(leader => leader.leaderNo);
+    
+    // 2. 가져온 LeaderNo 값을 가진 데이터를 삭제한다.
+    this.commonService.delLeader(selectedLeaderIds)
+      .subscribe({
+        next: (response) => {
+          console.log(response);
+        }
+      })
+    
   }
 
-  changePage(page: number): void {
-    this.paginator.pageIndex = page - 1;
-    this.paginator._changePageSize(this.paginator.pageSize);
-  }
 }

@@ -6,6 +6,7 @@ import { Leader } from '../../models/leader.model';
 import { School } from '../../models/school.model';
 import { Sport } from '../../models/sport.model';
 import { CommonService } from '../common.service';
+import { LeaderWorkInfo } from '../../models/leaderWorkInfo.model';
 
 @Component({
   selector: 'app-register',
@@ -19,33 +20,38 @@ export class RegisterComponent implements OnInit {
   schools: School[] = [];
   sports: Sport[] = [];
 
-  leaderCode: string = '';
-  leaderName: string = '';
-  schoolName: string = '';
+  model: LeaderWorkInfo;
 
-  // 근무 이력 배열
-  workHistoryList: any[] = [{
-    schoolName: '',
-    startDate: '',
-    endDate: '',
-    sports: ''
-  }];
-
-  // 자격 사항 배열
-  certificateList: {
-    certificateName: string,
-    certificateNo: string,
-    certificateDT: string,
-    organization: string
-  }[] = [{
-    certificateName: '',
-    certificateNo: '',
-    certificateDT: '',
-    organization: ''
-  }];
-
-
-  constructor(private dialog: MatDialog, private commonService: CommonService) { }
+  constructor(private dialog: MatDialog, private commonService: CommonService) {
+    this.model = {
+      leaderNo: '',
+      leaderImage: '',
+      leaderName: '',
+      birthday: '',
+      gender: '',
+      sportsNo: '',
+      schoolNo: '',
+      schoolName: '',
+      telNo: '',
+      telNo2: '',
+      telNo3: '',
+      empDT: '',
+      histories: [{
+        leaderNo: '',
+        schoolName: '',
+        startDT: new Date(),
+        endDT: new Date(),
+        sportsNo: '',
+      }],
+      certificates: [{
+        leaderNo: '',
+        certificateName: '',
+        certificateNo: '',
+        certificateDT: new Date(),
+        organization: '',
+      }],
+    };
+  }
 
   // 초기화
   ngOnInit(): void {
@@ -78,11 +84,20 @@ export class RegisterComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (buttonType === 'LeaderData') {
-        this.leaderCode = result.leader.leaderNo;
-        this.leaderName = result.leader.leaderName;
-      } else if (buttonType === 'SchoolData' && result) {
-        this.schoolName = result.school.schoolName;
+      if (buttonType === 'LeaderData' && result && result.leader) {
+        this.model.leaderNo = result.leader.leaderNo;
+        this.model.leaderName = result.leader.leaderName;
+
+        this.model.histories.forEach(history => {
+          history.leaderNo = result.leader.leaderNo;
+        });
+
+        this.model.certificates.forEach(certificate => {
+          certificate.leaderNo = result.leader.leaderNo;
+        });
+      } else if (buttonType === 'SchoolData' && result && result.school) {
+        this.model.schoolNo = result.school.schoolNo;
+        this.model.schoolName = result.school.schoolName;
       }
     });
   }
@@ -97,33 +112,39 @@ export class RegisterComponent implements OnInit {
 
   // 근무이력 테이블 행 추가
   addWorkHistory(): void {
-    this.workHistoryList.push({
+    const newHistoryRow = {
+      leaderNo: this.model.leaderNo, // Set leaderNo for the new row
+      startDT: new Date(),
+      endDT: new Date(),
       schoolName: '',
-      startDate: '',
-      endDate: '',
-      sports: ''
-    });
+      sportsNo: '',
+    };
 
-  }
-
-  // 추가된 행 삭제
-  deleteWorkHistory(index: number): void {
-    this.workHistoryList.splice(index, 1);
-  }
-
-  deleteCertificate(index: number): void {
-    this.certificateList.splice(index, 1);
+    this.model.histories.push(newHistoryRow);
   }
 
   // 자격사항 테이블 행 추가
   addCertificate(): void {
-    this.certificateList.push({
+    const newCertificateRow = {
+      leaderNo: this.model.leaderNo, // Set leaderNo for the new row
       certificateName: '',
       certificateNo: '',
-      certificateDT: '',
-      organization: ''
-    })
+      certificateDT: new Date(),
+      organization: '',
+    };
+
+    this.model.certificates.push(newCertificateRow);
   }
+
+  // 추가된 행 삭제
+  deleteWorkHistory(index: number): void {
+    this.model.histories.splice(index, 1);
+  }
+
+  deleteCertificate(index: number): void {
+    this.model.certificates.splice(index, 1);
+  }
+
 
   // 이미지 크기 검사
   base64ImageData: string = '';
@@ -151,7 +172,8 @@ export class RegisterComponent implements OnInit {
 
         if (srcData) {
           selectedImage.src = srcData as string;
-          this.base64ImageData = (srcData as string).split(",")[1];
+          // this.base64ImageData = (srcData as string).split(",")[1];
+          this.model.leaderImage = (srcData as string).split(",")[1];
         }
       };
 
@@ -159,4 +181,19 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  onFormSubmit() {
+    this.commonService.addLeader(this.model)
+      .subscribe({
+        next: (response) => {
+          console.log(this.model);
+          console.log(response)
+        }
+      })
+  }
+
+  // 유효성 검사
+  validation(): boolean {
+
+    return true;
+  }
 }
