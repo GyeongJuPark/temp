@@ -362,10 +362,6 @@ select {
     color: #0F2D6A;
 }
 
-select option[value=""][disabled] {
-    display: none;
-}w
-
 #table-container {
     max-height: 531px;
     overflow-y: auto;

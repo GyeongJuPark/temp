@@ -12,6 +12,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     height: 13px;
 }
 
-select option[value=""][disabled] {
+select option[disabled] {
     display: none;
 }

@@ -37,19 +37,19 @@ export class CommonService {
 
   // 지도자 등록
   addLeader(model: LeaderWorkInfo): Observable<void> {
-    return this.http.post<void>('https://localhost:7265/api/leaders', model);
+    const url = `${this.baseUrl}/api/leaders`;
+    return this.http.post<void>(url, model);
   }
 
   // 지도자 삭제
   delLeader(leaderNo: string[]): Observable<void> {
-    const url = `${this.baseUrl}/api/leaders/${leaderNo}`;
-    return this.http.delete<void>(url);
+    const url = `${this.baseUrl}/api/leaders`;
+    return this.http.delete<void>(url, { body: leaderNo });
   }
-  
-  // 지도자 수정
-  modLeader(leaderNo: string): Observable<void> {
-    const url = `${this.baseUrl}/api/leaders/${leaderNo}`;
-    return this.http.patch<void>(url, leaderNo);
+
+  modLeader(model: LeaderWorkInfo): Observable<void> {
+    const url = `${this.baseUrl}/api/leaders`;
+    return this.http.patch<void>(url, model);
   }
 
 }

@@ -113,7 +113,7 @@ export class RegisterComponent implements OnInit {
   // 근무이력 테이블 행 추가
   addWorkHistory(): void {
     const newHistoryRow = {
-      leaderNo: this.model.leaderNo, // Set leaderNo for the new row
+      leaderNo: this.model.leaderNo, 
       startDT: new Date(),
       endDT: new Date(),
       schoolName: '',
@@ -126,7 +126,7 @@ export class RegisterComponent implements OnInit {
   // 자격사항 테이블 행 추가
   addCertificate(): void {
     const newCertificateRow = {
-      leaderNo: this.model.leaderNo, // Set leaderNo for the new row
+      leaderNo: this.model.leaderNo, 
       certificateName: '',
       certificateNo: '',
       certificateDT: new Date(),

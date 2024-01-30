@@ -8,20 +8,7 @@ import { Sport } from '../../models/sport.model';
 import { CommonService } from '../common.service';
 import { LeaderWorkInfo } from '../../models/leaderWorkInfo.model';
 import { ActivatedRoute, Router } from '@angular/router';
-
-interface WorkHistoryItem {
-  schoolName: string;
-  startDT: Date | null;
-  endDT: Date | null;
-  sportsNo: string;
-}
-
-interface CertificateItem {
-  schoolName: string;
-  startDT: Date | null;
-  endDT: Date | null;
-  sportsNo: string;
-}
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-update',
@@ -32,7 +19,7 @@ export class UpdateComponent {
 
   selectedLeader: any;
 
-  constructor(private route: ActivatedRoute, private dialog: MatDialog, private commonService: CommonService) {
+  constructor(private route: ActivatedRoute, private dialog: MatDialog, private commonService: CommonService, private datePipe: DatePipe) {
     this.leaderNo = this.route.snapshot.params['leaderNo'];
   }
 
@@ -40,23 +27,6 @@ export class UpdateComponent {
   schools: School[] = [];
   sports: Sport[] = [];
 
-  // 근무이력 기본값 설정
-  workHistoryList: WorkHistoryItem[] = [
-    {
-      schoolName: '',
-      startDT: null,
-      endDT: null,
-      sportsNo: ''
-    }
-  ];
-
-  // 자격사항 기본값 설정
-  certificateList: CertificateItem[] = [{
-    schoolName: '',
-    startDT: null,
-    endDT: null,
-    sportsNo: ''
-  }];
   private readonly leaderNo: string;
   leaderData: LeaderWorkInfo[] = [];
 
@@ -67,12 +37,25 @@ export class UpdateComponent {
         next: (leaders) => {
           this.leaderData = leaders;
           this.selectedLeader = this.leaderData.find(leader => leader.leaderNo === this.leaderNo);
+          console.log(this.selectedLeader);
+
           const telNoParts = this.selectedLeader.telNo.split('-');
           this.selectedLeader.telNo = telNoParts[0];
           this.selectedLeader.telNo2 = telNoParts[1];
           this.selectedLeader.telNo3 = telNoParts[2];
+
+          this.selectedLeader.birthday = this.formatDate(this.selectedLeader.birthday);
+          this.selectedLeader.empDT = this.formatDate(this.selectedLeader.empDT);
+          this.selectedLeader.histories.forEach((history: { startDT: string | Date; endDT: string | Date; }) => {
+            history.startDT = this.formatDate(new Date(history.startDT));
+            history.endDT = this.formatDate(new Date(history.endDT));
+          });
+          this.selectedLeader.certificates.forEach(((certificate: { certificateDT: string | Date; }) => {
+            certificate.certificateDT = this.formatDate(new Date(certificate.certificateDT))
+          }));
         }
       });
+
 
     this.commonService.getAllLeaders()
       .subscribe({
@@ -96,37 +79,58 @@ export class UpdateComponent {
       });
   }
 
+  formatDate(date: Date): string {
+    return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
+  }
+
   removeWorkHistory(index: number) {
-    this.workHistoryList.splice(index, 1);
+    this.selectedLeader.histories.splice(index, 1);
   }
   removeCertificate(index: number) {
-    this.certificateList.splice(index, 1);
+    this.selectedLeader.certificates.splice(index, 1);
   }
 
-  addWorkHistory() {
-    const newWorkHistory = {
+  // 근무이력 테이블 행 추가
+  addWorkHistory(): void {
+    const newHistoryRow = {
+      leaderNo: this.selectedLeader.leaderNo,
+      startDT: new Date(),
+      endDT: new Date(),
       schoolName: '',
-      startDT: null,
-      endDT: null,
-      sportsNo: ''
+      sportsNo: '',
     };
-    this.workHistoryList.push(newWorkHistory);
+
+    this.selectedLeader.histories.push(newHistoryRow);
   }
 
-  addCertificate() {
-    const newCertificate = {
-      schoolName: '',
-      startDT: null,
-      endDT: null,
-      sportsNo: ''
+  // 자격사항 테이블 행 추가
+  addCertificate(): void {
+    const newCertificateRow = {
+      leaderNo: this.selectedLeader.leaderNo,
+      certificateName: '',
+      certificateNo: '',
+      certificateDT: new Date(),
+      organization: '',
     };
-    this.certificateList.push(newCertificate);
+
+    this.selectedLeader.certificates.push(newCertificateRow);
   }
 
   // 식별코드, 학교명 모달창
   openLargeModal(buttonType: string) {
     const dialogRef = this.dialog.open(LargeModalComponent, {
       data: { dynamicContent: buttonType, leaders: this.leaders, schools: this.schools }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (buttonType === 'LeaderData' && result && result.leader) {
+        this.selectedLeader.leaderNo = result.leader.leaderNo;
+        this.selectedLeader.leaderName = result.leader.leaderName;
+
+      } else if (buttonType === 'SchoolData' && result && result.school) {
+        this.selectedLeader.schoolNo = result.school.schoolNo;
+        this.selectedLeader.schoolName = result.school.schoolName;
+      }
     });
   }
 
@@ -163,21 +167,25 @@ export class UpdateComponent {
 
         if (srcData) {
           selectedImage.src = srcData as string;
-          this.base64ImageData = (srcData as string).split(",")[1];
+          this.selectedLeader.leaderImage = (srcData as string).split(",")[1];
         }
       };
+
 
       fileReader.readAsDataURL(imageFile);
     }
   }
 
-  onUpdateLeader() {
-    const leaderNo = this.selectedLeader.leaderNo;
-    this.commonService.modLeader(leaderNo)
-    .subscribe({
-      next: (response) => {
-        console.log(response);
-      }
-    })
+  // 지도자 수정
+  onFormSubmit() {
+
+    this.commonService.modLeader(this.selectedLeader)
+      .subscribe({
+        next: (response) => {
+        },
+        error: (error) => {
+        }
+      });
   }
+
 }

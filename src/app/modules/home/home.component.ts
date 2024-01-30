@@ -50,8 +50,9 @@ export class HomeComponent {
 
   getPages(): number[] {
     const totalPages = Math.ceil(this.leaderList.length / this.pageSize);
-    const startPage = Math.max(1, this.currentPage - 2);
-    const endPage = Math.min(totalPages, startPage + 4);
+    const startPage = Math.floor((this.currentPage - 1) / 5) * 5 + 1;
+    const endPage = Math.min(startPage + 4, totalPages);
+
     return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
   }
 
@@ -191,15 +192,30 @@ export class HomeComponent {
   onDeleteLeader() {
     // 1. 선택한 체크박스의 LeaderNo 값을 가져온다.
     const selectedLeaderIds = this.selection.selected.map(leader => leader.leaderNo);
-    
+
     // 2. 가져온 LeaderNo 값을 가진 데이터를 삭제한다.
     this.commonService.delLeader(selectedLeaderIds)
       .subscribe({
         next: (response) => {
+          // 3. 성공적으로 삭제되었으면, 삭제된 데이터를 leaderList에서 제거한다.
+          this.leaderList = this.leaderList.filter(leader => !selectedLeaderIds.includes(leader.leaderNo));
+
+          // 4. 업데이트된 데이터를 테이블에 반영한다.
+          this.updateDataSource();
+
+          // 5. 선택한 체크박스를 초기화한다.
+          this.selection.clear();
+
+          // 6. 삭제 버튼 비활성화
+          this.isDeleteButtonActive = false;
+
           console.log(response);
+        },
+        error: (error) => {
+          console.error(error);
         }
-      })
-    
+      });
   }
+
 
 }

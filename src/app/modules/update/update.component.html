@@ -1,160 +1,172 @@
 <section class="registerPage" *ngIf="selectedLeader">
     <p>지도자 수정</p>
     <div class="container">
-        <div class="inner">
-            <div class="profile">
-                <p>1. 일반 현황(2023년 01월 01일 기준)<small class="requiredFields">* 필수입력값 항목입니다.</small></p>
-                <div class="division-line"></div>
-                <div class="profile__inner">
-
-                    <div class="profile__image">
-                        <div class="profile__imageArea">
-                            <img id="leaderImage" [src]="'data:image/png;base64,' + selectedLeader.leaderImage" />
-                            <label class="profile__imageLabel" for="input-image">
-                                <p>사진 첨부하기</p>
-                            </label>
-                            <input type="file" id="input-image" (change)="imageSizeCheck($event)" style="display: none" />
-                        </div>
-                        <p>파일 크기는 MB 이하로 등록해주세요.</p>
-                    </div>
-
-                    <div class="input-wrap">
-
-                        <div class="leaderInfo">
-                            <div class="form-group">
-                                <div class="input__code">
-                                    <p>식별코드</p>
-                                    <input type="text" id="leaderNo" name="leaderNo" placeholder="식별코드를 선택해주세요." [(ngModel)]="selectedLeader.leaderNo" readonly />
-                                    <button type="button" (click)="openLargeModal('LeaderData')">식별코드검색</button>
-                                </div>
-                                <div class="input__school">
-                                    <p>학교명</p>
-                                    <input type="text" id="schoolName" name="schoolName" placeholder="학교명을 선택해주세요." value={{selectedLeader.schoolNo}} readonly />
-                                    <input type="hidden" id="schoolNo" name="schoolNo" />
-                                    <button type="button" id="search_schoolName" (click)="openLargeModal('SchoolData')">학교명검색</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="input__second">
-                            <div class="form-group">
-                                <div>
-                                    <p>성명</p>
-                                    <input type="text" value="" id="leaderName" name="leaderName" placeholder="이름을 입력하세요." [(ngModel)]="selectedLeader.leaderName" required />
-                                </div>
-                                <div class="input__birthday">
-                                    <p>생년월일</p>
-                                    <input type="date" id="birthday" name="birthday" placeholder="생년월일을 선택해주세요." required aria-required="true" [(ngModel)]="selectedLeader.birthday" />
-                                </div>
-                                <div class="input__gender">
-                                    <p>성별</p>
-                                    <input type="radio" name="gender" [checked]="selectedLeader.gender === 'M'" (change)="selectedLeader.gender = 'M'" />남자
-                                    <input type="radio" name="gender" [checked]="selectedLeader.gender === 'W'" (change)="selectedLeader.gender = 'W'" />여자
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="input__second">
-                            <div class="form-group">
-                                <div class="input__sports">
-                                    <p>종목 </p>
-                                    <select id="sportsNo" name="sportsNo" [(ngModel)]="selectedLeader.sportsNo">
-                                        <option disabled selected>{{selectedLeader.sportsNo}}</option>
-                                        <option *ngFor="let sport of sports" [value]="sport.sportsNo">{{sport.sportsName}}</option>
-                                    </select>
-                                </div>
-                                <div class="input__tel">
-                                    <p>근무지 전화번호</p>
-                                    <input type="tel" id="telNo1" name="telNo1" [(ngModel)]="selectedLeader.telNo" placeholder="063" maxlength="3" />
-                                    -
-                                    <input type="tel" id="telNo2" name="telNo1" [(ngModel)]="selectedLeader.telNo2" placeholder="063" maxlength="3" />
-                                    -
-                                    <input type="tel" id="telNo3" name="telNo3" [value]="selectedLeader.telNo3" placeholder="4567" maxlength="4" />
-                                </div>
-
-                                <div>
-                                    <p>최초채용</p>
-                                    <input type="date" id="empDT" name="empDT" placeholder="최초채용일을 선택해주세요." required aria-required="true" [value]="selectedLeader.empDT | date: 'yyyy-MM-dd'" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="workHistory">
-                    <p>2. 근무 이력(전라북도교육청 소속 - 최초 채용일로부터)<small class="requiredFields">* 필수입력값 항목입니다.</small></p>
+        <form #form="ngForm" (ngSubmit)="onFormSubmit()">
+            <div class="inner">
+                <div class="profile">
+                    <p>1. 일반 현황(2023년 01월 01일 기준)<small class="requiredFields">* 필수입력값 항목입니다.</small></p>
                     <div class="division-line"></div>
-                    <div class="workHistory__info">
-                        <p>&#8251; 현재 근무 중인 경우 근무 종료일을 입력하지 마십시오.</p>
+                    <div class="profile__inner">
 
-                        <table id="history_table" class="t">
+                        <div class="profile__image">
+                            <div class="profile__imageArea">
+                                <img id="img" [src]="'data:image/png;base64,' + selectedLeader.leaderImage" />
+                                <label class="profile__imageLabel" for="input-image">
+                                    <p>사진 첨부하기</p>
+                                </label>
+                                <input type="file" id="input-image" (change)="imageSizeCheck($event)" style="display: none" />
+                            </div>
+                            <p>파일 크기는 MB 이하로 등록해주세요.</p>
+                        </div>
 
-                            <thead>
-                                <tr>
-                                    <th scope="col">근무기관</th>
-                                    <th scope="col">근무시작일</th>
-                                    <th scope="col">근무종료일</th>
-                                    <th scope="col" colspan="2">종목</th>
-                                </tr>
-                            </thead>
+                        <div class="input-wrap">
 
-                            <tbody>
-                                <tr *ngFor="let history of selectedLeader.histories let i = index">
-                                    <td><input type="text" placeholder="학교명을 입력해주세요." value={{history.schoolName}}></td>
-                                    <td><input type="date" placeholder="근무 시작일을 선택해주세요." required aria-required="true" [value]="history.startDT| date:'yyyy-MM-dd'" /></td>
-                                    <td><input type="date" placeholder="근무 종료일을 선택해주세요." required aria-required="true" [value]="history.endDT | date: 'yyyy-MM-dd'" /></td>
-                                    <td>
-                                        <select class="sel">
-                                            <option value="" disabled selected>{{history.sportsNo}}</option>
-                                            <option *ngFor="let sport of sports" value={{sport.sportsNo}}>{{sport.sportsName}}</option>
+                            <div class="leaderInfo">
+                                <div class="form-group">
+                                    <div class="input__code">
+                                        <p>식별코드</p>
+                                        <input type="text" id="leaderNo" name="leaderNo" placeholder="식별코드를 선택해주세요." [(ngModel)]="selectedLeader.leaderNo" readonly />
+                                        <button type="button" (click)="openLargeModal('LeaderData')">식별코드검색</button>
+                                    </div>
+                                    <div class="input__school">
+                                        <p>학교명</p>
+                                        <input type="text" id="schoolName" name="schoolName" placeholder="학교명을 선택해주세요." [(ngModel)]="selectedLeader.schoolName" readonly />
+                                        <input type="hidden" id="schoolNo" name="schoolNo" [(ngModel)]="selectedLeader.schoolNo" />
+                                        <button type="button" id="search_schoolName" (click)="openLargeModal('SchoolData')">학교명검색</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="input__second">
+                                <div class="form-group">
+                                    <div>
+                                        <p>성명</p>
+                                        <input type="text" value="" id="leaderName" name="leaderName" placeholder="이름을 입력하세요." [(ngModel)]="selectedLeader.leaderName" required />
+                                    </div>
+                                    <div class="input__birthday">
+                                        <p>생년월일</p>
+                                        <input type="date" id="birthday" name="birthday" placeholder="생년월일을 선택해주세요." required aria-required="true" [(ngModel)]="selectedLeader.birthday" />
+                                    </div>
+                                    <div class="input__gender">
+                                        <p>성별</p>
+                                        <input type="radio" name="gender" [(ngModel)]="selectedLeader.gender" value="M" />남자
+                                        <input type="radio" name="gender" [(ngModel)]="selectedLeader.gender" value="W" />여자
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="input__second">
+                                <div class="form-group">
+                                    <div class="input__sports">
+                                        <p>종목 </p>
+                                        <!-- <select id="sportsNo" name="sportsNo" [(ngModel)]="selectedLeader.sportsNo">
+                                            <option disabled selected value={{selectedLeader.sportsNo}}>{{selectedLeader.sportsNo}}</option>
+                                            <option *ngFor="let sport of sports" [value]="sport.sportsNo">{{sport.sportsName}}</option>
+                                        </select> -->
+                                        <select id="sportsNo" name="sportsNo" [(ngModel)]="selectedLeader.sportsNo">
+                                            <option disabled selected>{{selectedLeader.sportsName}}</option>
+                                            <option *ngFor="let sport of sports" [value]="sport.sportsNo">{{sport.sportsName}}</option>
                                         </select>
-                                    </td>
-                                    <td>
-                                        <input type="button" class="add_btn" value="{{ i === 0 ? '추가' : '삭제' }}" (click)="i === 0 ? addWorkHistory() : removeWorkHistory(i)" />
-                                    </td>
-                                </tr>
-                            </tbody>
+                                    </div>
+                                    <div class="input__tel">
+                                        <p>근무지 전화번호</p>
+                                        <input type="tel" id="telNo1" name="telNo1" [(ngModel)]="selectedLeader.telNo" placeholder="063" maxlength="3" />
+                                        -
+                                        <input type="tel" id="telNo2" name="telNo1" [(ngModel)]="selectedLeader.telNo2" placeholder="063" maxlength="3" />
+                                        -
+                                        <input type="tel" id="telNo3" name="telNo3" [(ngModel)]="selectedLeader.telNo3" placeholder="4567" maxlength="4" />
+                                    </div>
 
-                        </table>
+                                    <div>
+                                        <p>최초채용</p>
+                                        <input type="date" id="empDT" name="empDT" placeholder="최초채용일을 선택해주세요." required aria-required="true" [(ngModel)]="selectedLeader.empDT" />
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workHistory">
+                        <p>2. 근무 이력(전라북도교육청 소속 - 최초 채용일로부터)<small class="requiredFields">* 필수입력값 항목입니다.</small></p>
+                        <div class="division-line"></div>
+                        <div class="workHistory__info">
+                            <p>&#8251; 현재 근무 중인 경우 근무 종료일을 입력하지 마십시오.</p>
+
+                            <table id="history_table" class="t">
+
+                                <thead>
+                                    <tr>
+                                        <th scope="col">근무기관</th>
+                                        <th scope="col">근무시작일</th>
+                                        <th scope="col">근무종료일</th>
+                                        <th scope="col" colspan="2">종목</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr *ngFor="let history of selectedLeader.histories let i = index">
+                                        <td><input type="text" placeholder="학교명을 입력해주세요." [(ngModel)]="history.schoolName" [ngModelOptions]="{standalone: true}"></td>
+                                        <td><input type="date" placeholder="근무 시작일을 선택해주세요." required aria-required="true" [(ngModel)]="history.startDT" [ngModelOptions]="{standalone: true}" /></td>
+                                        <td><input type="date" placeholder="근무 종료일을 선택해주세요." required aria-required="true" [(ngModel)]="history.endDT" [ngModelOptions]="{standalone: true}" /></td>
+                                        <td>
+                                            <select class="sel" name="sportsNo" [(ngModel)]="history.sportsNo" [ngModelOptions]="{standalone: true}">
+                                                <ng-container *ngIf="i !== 0">
+                                                    <option value="" disabled selected>종목을 선택해주세요.</option>
+                                                </ng-container>
+                                                <option disabled selected>{{history.sportsName}}</option>
+                                                <option *ngFor="let sport of sports" [value]="sport.sportsNo">{{sport.sportsName}}</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="button" class="add_btn" value="{{ i === 0 ? '추가' : '삭제' }}" (click)="i === 0 ? addWorkHistory() : removeWorkHistory(i)" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="certificate">
+                        <p>3. 자격사항<small class="requiredFields">* 필수입력값 항목입니다.</small></p>
+                        <div class="division-line"></div>
+                        <div class="certificate__info">
+                            <table id="certificate_table" class="t">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">자격/면허</th>
+                                        <th scope="col">자격번호</th>
+                                        <th scope="col">취득일자</th>
+                                        <th scope="col" colspan="2">발급기관</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr *ngFor="let certificate of selectedLeader.certificates; let i = index">
+                                        <td><input type="text" placeholder="학교명을 입력해주세요." [(ngModel)]="certificate.certificateName" [ngModelOptions]="{standalone: true}" /></td>
+                                        <td><input type="text" placeholder="영문, 숫자만 입력해주세요." required aria-required="true" [(ngModel)]="certificate.certificateNo"
+                                                [ngModelOptions]="{standalone: true}" /></td>
+                                        <td><input type="date" placeholder="취득 일자를 선택해주세요." required aria-required="true" [(ngModel)]="certificate.certificateDT"
+                                                [ngModelOptions]="{standalone: true}" /></td>
+                                        <td><input type="text" placeholder="발급 기관을 입력해주세요." [(ngModel)]="certificate.organization" [ngModelOptions]="{standalone: true}" /></td>
+
+                                        <td>
+                                            <input type="button" class="add_btn" value="{{ i === 0 ? '추가' : '삭제' }}" (click)="i === 0 ? addCertificate() : removeCertificate(i)" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-
-                <div class="certificate">
-                    <p>3. 자격사항<small class="requiredFields">* 필수입력값 항목입니다.</small></p>
-                    <div class="division-line"></div>
-                    <div class="certificate__info">
-                        <table id="certificate_table" class="t">
-                            <thead>
-                                <tr>
-                                    <th scope="col">자격/면허</th>
-                                    <th scope="col">자격번호</th>
-                                    <th scope="col">취득일자</th>
-                                    <th scope="col" colspan="2">발급기관</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr *ngFor="let certificate of selectedLeader.certificates; let i = index">
-                                    <td><input type="text" placeholder="학교명을 입력해주세요." value={{certificate.certificateName}} /></td>
-                                    <td><input type="text" placeholder="영문, 숫자만 입력해주세요." required aria-required="true" value={{certificate.certificateNo}} /></td>
-                                    <td><input type="date" placeholder="취득 일자를 선택해주세요." required aria-required="true" [value]="certificate.certificateDT | date: 'yyyy-MM-dd'" /></td>
-                                    <td><input type="text" placeholder="발급 기관을 입력해주세요." value={{certificate.organization}} /></td>
-
-                                    <td>
-                                        <input type="button" class="add_btn" value="{{ i === 0 ? '추가' : '삭제' }}" (click)="i === 0 ? addCertificate() : removeCertificate(i)" />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="buttons">
+                    <button class="cancel_btn" type="button" (click)="openSmallModal('cancel')">취소하기</button>
+                    <button id="lSubmit" class="signup_btn" type="submit">수정하기</button>
                 </div>
             </div>
-            <div class="buttons">
-                <button class="cancel_btn" type="button" (click)="openSmallModal('cancel')">취소하기</button>
-                <button id="lSubmit" class="signup_btn" type="button" (click)="onUpdateLeader()">수정하기</button>
-            </div>
-        </div>
+        </form>
     </div>
 
 
