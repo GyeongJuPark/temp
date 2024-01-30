@@ -17,6 +17,7 @@ export interface LeaderWorkInfo {
         endDT: Date;
         schoolName: string;
         sportsNo: string;
+        sportsName: string;
     }>;
     certificates: Array<{
         leaderNo: string;

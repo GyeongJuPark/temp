@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { SmallModalComponent } from '../small-modal/small-modal.component';
 
 @Component({
   selector: 'app-large-modal',
@@ -9,6 +10,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class LargeModalComponent {
   constructor(
     public dialogRef: MatDialogRef<LargeModalComponent>,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
@@ -76,9 +78,22 @@ export class LargeModalComponent {
   toggleSelect(type: 'leader' | 'school', element: any): void {
     this.selected[type] = this.selected[type] === element ? null : element;
   }
-  
+
   registerData(): void {
-    this.dialogRef.close(this.selected);
+    let dynamicContent: 'leaderCode' | 'schoolCode';
+
+    if (!this.selected.leader && !this.selected.school) {
+      dynamicContent = this.data.dynamicContent === 'LeaderData' ? 'leaderCode' : 'schoolCode';
+    } else {
+      this.dialogRef.close(this.selected);
+      return;
+    }
+
+    const codeDialog = this.dialog.open(SmallModalComponent, {
+      data: { dynamicContent }
+    });
+
+    codeDialog.afterClosed().subscribe(result => {
+    });
   }
-  
 }

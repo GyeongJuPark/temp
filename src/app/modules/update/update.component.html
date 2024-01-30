@@ -89,7 +89,7 @@
                     </div>
 
                     <div class="workHistory">
-                        <p>2. 근무 이력(전라북도교육청 소속 - 최초 채용일로부터)<small class="requiredFields">* 필수입력값 항목입니다.</small></p>
+                        <p>2. 근무 이력(전라북도교육청 소속 - 최초 채용일로부터 )<small class="requiredFields">* 필수입력값 항목입니다.</small></p>
                         <div class="division-line"></div>
                         <div class="workHistory__info">
                             <p>&#8251; 현재 근무 중인 경우 근무 종료일을 입력하지 마십시오.</p>
@@ -115,7 +115,6 @@
                                                 <ng-container *ngIf="i !== 0">
                                                     <option value="" disabled selected>종목을 선택해주세요.</option>
                                                 </ng-container>
-                                                <option disabled selected>{{history.sportsName}}</option>
                                                 <option *ngFor="let sport of sports" [value]="sport.sportsNo">{{sport.sportsName}}</option>
                                             </select>
                                         </td>

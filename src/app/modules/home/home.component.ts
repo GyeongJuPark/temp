@@ -52,7 +52,10 @@ export class HomeComponent {
     const totalPages = Math.ceil(this.leaderList.length / this.pageSize);
     const startPage = Math.floor((this.currentPage - 1) / 5) * 5 + 1;
     const endPage = Math.min(startPage + 4, totalPages);
-
+    console.log("totalpage:", totalPages);
+    console.log("startPage:", startPage);
+    console.log("endPage:", endPage);
+    
     return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
   }
 

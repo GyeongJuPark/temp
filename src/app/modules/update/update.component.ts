@@ -98,6 +98,7 @@ export class UpdateComponent {
       endDT: new Date(),
       schoolName: '',
       sportsNo: '',
+      sportsName: '',
     };
 
     this.selectedLeader.histories.push(newHistoryRow);

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, EventEmitter, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
@@ -8,9 +8,12 @@ import { Router } from '@angular/router';
   styleUrl: './small-modal.component.css'
 })
 export class SmallModalComponent {
+  public onConfirm: EventEmitter<boolean> = new EventEmitter();
+  
   constructor(
     public dialogRef: MatDialogRef<SmallModalComponent>,
     private routes: Router,
+    
   @Inject(MAT_DIALOG_DATA) public data: any
   ){ }
 
@@ -21,6 +24,10 @@ export class SmallModalComponent {
   goToIndexPage(): void {
     this.closeDialog();
     this.routes.navigate(["home"]);
+  }
+
+  onRegister() {
+    this.onConfirm.emit();
   }
 
 }
