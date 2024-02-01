@@ -104,7 +104,7 @@
 
                                     <div>
                                         <p>최초채용</p>
-                                        <input type="date" id="empDT" name="empDT" placeholder="최초채용일을 선택해주세요." required aria-required="true" [(ngModel)]="selectedLeader.empDT" />
+                                        <input type="date" id="EmpDT" name="EmpDT" placeholder="최초채용일을 선택해주세요." required aria-required="true" [(ngModel)]="selectedLeader.empDT" />
                                         <div *ngIf="getValidationError('EmpDT') let validationError">
                                             <span class="text-danger">{{ validationError }}</span>
                                         </div>

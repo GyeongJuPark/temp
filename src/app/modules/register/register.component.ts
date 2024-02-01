@@ -8,6 +8,7 @@ import { Sport } from '../../models/sport.model';
 import { CommonService } from '../common.service';
 import { LeaderWorkInfo } from '../../models/leaderWorkInfo.model';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-register',
@@ -27,6 +28,7 @@ export class RegisterComponent implements OnInit {
     private dialog: MatDialog,
     private commonService: CommonService,
     private routes: Router,
+    private datePipe: DatePipe
   ) {
     this.model = {
       leaderNo: '',

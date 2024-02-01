@@ -52,17 +52,23 @@ export class UpdateComponent {
           this.selectedLeader.telNo2 = telNoParts[1];
           this.selectedLeader.telNo3 = telNoParts[2];
 
-          // this.selectedLeader.birthday = this.formatDate(this.selectedLeader.birthday);
-          // this.selectedLeader.empDT = this.formatDate(this.selectedLeader.empDT);
-          
-          console.log(`birthday: ${this.selectedLeader.birthday}`);
+          this.selectedLeader.birthday = this.formatDate(this.selectedLeader.birthday);
+          this.selectedLeader.empDT = this.formatDate(this.selectedLeader.empDT);
+
+
 
 
 
           this.selectedLeader.histories.forEach((history: { startDT: string | Date; endDT: string | Date; }) => {
-            history.startDT = this.formatDate(new Date(history.startDT));
-            history.endDT = this.formatDate(new Date(history.endDT));
+            if (history.startDT !== null) {
+              history.startDT = this.formatDate(new Date(history.startDT));
+            }
+
+            if (history.endDT !== null) {
+              history.endDT = this.formatDate(new Date(history.endDT));
+            }
           });
+
 
           this.selectedLeader.certificates.forEach(((certificate: { certificateDT: string | Date; }) => {
             certificate.certificateDT = this.formatDate(new Date(certificate.certificateDT))
@@ -93,11 +99,6 @@ export class UpdateComponent {
       });
   }
 
-  test() {
-    console.log(this.selectedLeader.birthday);
-    console.log(this.selectedLeader.empDT);
-  }
-
   formatDate(date: Date): string {
     return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
   }
@@ -117,7 +118,7 @@ export class UpdateComponent {
     const newHistoryRow = {
       leaderNo: this.selectedLeader.leaderNo,
       startDT: new Date(),
-      endDT: new Date(),
+      endDT: new Date() || null,
       schoolName: '',
       sportsNo: '',
       sportsName: '',
@@ -262,12 +263,29 @@ export class UpdateComponent {
 
   // 지도자 수정
   onFormSubmit() {
-    console.log(`birthdaycheck: ${this.selectedLeader.birthday}`);
-    // this.selectedLeader.birthday = this.formatDate(this.selectedLeader.birthday);
-    // console.log(`birthdayConvert: ${this.selectedLeader.birthday}`);
     this.selectedLeader.birthday = this.selectedLeader.birthday
-    ? this.formatDate(this.selectedLeader.birthday)
-    : undefined;
+      ? this.formatDate(this.selectedLeader.birthday)
+      : null;
+
+    this.selectedLeader.empDT = this.selectedLeader.empDT
+      ? this.formatDate(this.selectedLeader.empDT)
+      : null;
+
+    for (const history of this.selectedLeader.histories) {
+      history.startDT = history.startDT
+        ? this.formatDate(new Date(history.startDT))
+        : null;
+
+      history.endDT = history.endDT
+        ? this.formatDate(new Date(history.endDT))
+        : null;
+    }
+    for (const certificate of this.selectedLeader.certificates) {
+      certificate.certificateDT = certificate.certificateDT
+        ? this.formatDate(new Date(certificate.certificateDT))
+        : null;
+    }
+
     this.commonService.modLeader(this.selectedLeader)
       .subscribe({
         next: (response) => {
