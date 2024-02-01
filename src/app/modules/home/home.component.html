@@ -78,8 +78,7 @@
                     <mat-icon>chevron_left</mat-icon>
                 </button>
 
-                <!-- 5개씩 끊어서 보여지려면 -> LIST 형태? [ {1, 2, 3, 4, 5}] | 화살표에 대한 로직도 달라지게 됨 -->
-                <button *ngFor="let page of getPages()" [class.active]="currentPage === page" (click)="changePage(page)" class="test">
+                <button *ngFor="let page of getPages()" [class.active]="currentPage === page" (click)="changePage(page)" class="pageBtn">
                     {{ page }}
                 </button>
 

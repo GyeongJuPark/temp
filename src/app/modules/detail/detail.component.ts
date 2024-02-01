@@ -14,8 +14,10 @@ import { LeaderWorkInfo } from '../../models/leaderWorkInfo.model';
 export class DetailComponent implements OnInit {
 
   private readonly leaderNo: string;
+
   leaderData: LeaderWorkInfo[] = [];
   selectedLeader: any;
+
   constructor(
     private routes: Router,
     private route: ActivatedRoute,
@@ -31,7 +33,6 @@ export class DetailComponent implements OnInit {
         next: (leaders) => {
           this.leaderData = leaders;
           this.selectedLeader = this.leaderData.find(leader => leader.leaderNo === this.leaderNo);
-          console.log(this.selectedLeader)
         }
       });
   }
@@ -46,7 +47,6 @@ export class DetailComponent implements OnInit {
 
   // 이미지 크기 검사
   base64ImageData: string = '';
-  Imagevalue: string = '';
   LeaderImage: string = '';
 
   imageSizeCheck(event: any): void {
@@ -73,7 +73,6 @@ export class DetailComponent implements OnInit {
         if (srcData) {
           selectedImage.src = srcData as string;
           this.base64ImageData = (srcData as string).split(",")[1];
-          this.Imagevalue = this.base64ImageData;
           this.LeaderImage = this.base64ImageData;
         }
       };

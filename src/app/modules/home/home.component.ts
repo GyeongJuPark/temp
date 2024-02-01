@@ -11,6 +11,7 @@ import { CommonService } from '../common.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
+
 export class HomeComponent {
   displayedColumns: string[] = ['select', 'index', 'code', 'name', 'sport', 'school', 'detail'];
   dataSource = new MatTableDataSource<LeaderWorkInfo>();
@@ -43,7 +44,7 @@ export class HomeComponent {
     this.commonService.getLeaderList().subscribe({
       next: (leaders) => {
         this.leaderList = leaders;
-        this.updateDataSource();
+        this.updateData();
       },
     });
   }
@@ -52,17 +53,14 @@ export class HomeComponent {
     const totalPages = Math.ceil(this.leaderList.length / this.pageSize);
     const startPage = Math.floor((this.currentPage - 1) / 5) * 5 + 1;
     const endPage = Math.min(startPage + 4, totalPages);
-    console.log("totalpage:", totalPages);
-    console.log("startPage:", startPage);
-    console.log("endPage:", endPage);
-    
+
     return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
   }
 
 
   changePage(page: number): void {
     this.currentPage = page;
-    this.updateDataSource();
+    this.updateData();
   }
 
   isFirstPage(): boolean {
@@ -76,30 +74,30 @@ export class HomeComponent {
 
   goToFirstPage(): void {
     this.currentPage = 1;
-    this.updateDataSource();
+    this.updateData();
   }
 
   goToPreviousPage(): void {
     if (!this.isFirstPage()) {
       this.currentPage--;
-      this.updateDataSource();
+      this.updateData();
     }
   }
 
   goToNextPage(): void {
     if (!this.isLastPage()) {
       this.currentPage++;
-      this.updateDataSource();
+      this.updateData();
     }
   }
 
   goToLastPage(): void {
     const totalPages = Math.ceil(this.leaderList.length / this.pageSize);
     this.currentPage = totalPages;
-    this.updateDataSource();
+    this.updateData();
   }
 
-  updateDataSource(): void {
+  updateData(): void {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     this.dataSource.data = this.leaderList.slice(startIndex, endIndex);
@@ -127,6 +125,7 @@ export class HomeComponent {
     }
 
     this.dataSource.data = filteredData;
+    
     this.paginator.firstPage();
   }
 
@@ -145,7 +144,7 @@ export class HomeComponent {
     if (selectedLeader) {
       this.routes.navigate(['home/detail', selectedLeader.leaderNo]);
     } else {
-      console.error('Leader not found');
+      console.error('해당 지도자를 찾을 수 없습니다.');
     }
   }
 
@@ -170,6 +169,7 @@ export class HomeComponent {
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
+
   toggleAllRows() {
     if (this.isAllSelected()) {
       this.selection.clear();
@@ -193,24 +193,22 @@ export class HomeComponent {
   }
 
   onDeleteLeader() {
-    // 1. 선택한 체크박스의 LeaderNo 값을 가져온다.
     const selectedLeaderIds = this.selection.selected.map(leader => leader.leaderNo);
 
-    // 2. 가져온 LeaderNo 값을 가진 데이터를 삭제한다.
     this.commonService.delLeader(selectedLeaderIds)
       .subscribe({
         next: (response) => {
-          // 3. 성공적으로 삭제되었으면, 삭제된 데이터를 leaderList에서 제거한다.
           this.leaderList = this.leaderList.filter(leader => !selectedLeaderIds.includes(leader.leaderNo));
 
-          // 4. 업데이트된 데이터를 테이블에 반영한다.
-          this.updateDataSource();
+          this.updateData();
 
-          // 5. 선택한 체크박스를 초기화한다.
           this.selection.clear();
 
-          // 6. 삭제 버튼 비활성화
-          this.isDeleteButtonActive = false;
+          const totalPages = Math.ceil(this.leaderList.length / this.pageSize);
+          if (this.currentPage > totalPages) {
+            this.currentPage = totalPages;
+            this.updateData();
+          }
 
           console.log(response);
         },
@@ -219,6 +217,4 @@ export class HomeComponent {
         }
       });
   }
-
-
 }

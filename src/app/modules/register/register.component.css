@@ -127,16 +127,24 @@
     border-radius: 5px;
 }
 
+
+
 .leaderInfo .form-group button {
-    width: 104px;
+    width: 100px;
     height: 43px;
     margin-top: 9px;
-    margin-left: -100px;
+    margin-left: -100px; 
     border: 0;
     border-radius: 5px;
     font-weight: 500;
     background-color: #238AF7;
     color: #FFFFFF;
+}
+
+@media only screen and (max-width: 768px) {
+    .leaderInfo .form-group button {
+        margin-left: -15%; 
+    }
 }
 
 .leaderInfo .form-group button:hover {
@@ -371,9 +379,6 @@ select {
     background-color: #F9F9F9 !important;
 }
 
-
-
-
 input[type="date"]:focus::before,
 input[type="date"]:valid::before {
     display: none;
@@ -394,7 +399,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     height: 13px;
 }
 
-
 .btnOk {
     width: 88px;
     height: 42px;
@@ -409,3 +413,4 @@ input[type="date"]::before {
     width: 100%;
     color: #757575;
 }
+

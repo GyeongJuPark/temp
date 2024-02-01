@@ -6,7 +6,7 @@
             확인 후 채워주시길 바랍니다.
         </div>
         <mat-dialog-actions align="center">
-            <button mat-button [mat-dialog-close]="true" cdkFocusInitial class="okBtn">확인</button>
+            <button mat-button [mat-dialog-close]="true" class="okBtn">확인</button>
         </mat-dialog-actions>
     </ng-container>
 
@@ -22,6 +22,18 @@
         </mat-dialog-actions>
     </ng-container>
 
+    <ng-container *ngIf="data.dynamicContent === 'updateCancel'">
+        <h1 mat-dialog-title>지도자 수정 취소</h1>
+        <div mat-dialog-content>
+            지도자 수정을 취소하시겠습니까?<br />
+            수정한 내용은 모두 삭제됩니다.
+        </div>
+        <mat-dialog-actions align="center">
+            <button mat-button mat-dialog-close class="cancelBtn">취소</button>
+            <button mat-button [mat-dialog-close]="true" class="okBtn" (click)="goToDetailPage()">확인</button>
+        </mat-dialog-actions>
+    </ng-container>
+
     <ng-container *ngIf="data.dynamicContent === 'register'">
         <h1 mat-dialog-title>지도자 등록</h1>
         <div mat-dialog-content>
@@ -33,6 +45,8 @@
         </mat-dialog-actions>
     </ng-container>
 
+
+    <!-- 지도자, 학교 모달창 -->
     <ng-container *ngIf="data.dynamicContent === 'leaderCode'">
         <h1 mat-dialog-title>선택된 식별코드 없음</h1>
         <div mat-dialog-content>
@@ -40,10 +54,10 @@
             지도자 식별코드를 선택해주시기 바랍니다.
         </div>
         <mat-dialog-actions align="center">
-            <button mat-button [mat-dialog-close]="true" cdkFocusInitial class="okBtn">확인</button>
+            <button mat-button [mat-dialog-close]="true" class="okBtn">확인</button>
         </mat-dialog-actions>
     </ng-container>
-    
+
     <ng-container *ngIf="data.dynamicContent === 'schoolCode'">
         <h1 mat-dialog-title>선택된 학교 없음</h1>
         <div mat-dialog-content>
@@ -51,7 +65,7 @@
             학교명을 선택해주시기 바랍니다.
         </div>
         <mat-dialog-actions align="center">
-            <button mat-button [mat-dialog-close]="true" cdkFocusInitial class="okBtn">확인</button>
+            <button mat-button [mat-dialog-close]="true" class="okBtn">확인</button>
         </mat-dialog-actions>
     </ng-container>
 

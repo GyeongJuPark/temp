@@ -301,12 +301,12 @@
     color: #FFFFFF;
 }
 
-.pagination button:not(.test):hover {
+.pagination button:not(.pageBtn):hover {
     border-radius: 50%;
     background-color: #DDDDDD;
 }
 
-.pagination button:not(.test).active {
+.pagination button:not(.pageBtn).active {
     border-radius: 50%;
     background-color: #DDDDDD;
     color: #0F2D6A;

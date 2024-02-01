@@ -32,8 +32,8 @@ export class LargeModalComponent {
 
     if (this.data.dynamicContent === 'LeaderData') {
       searchResult = this.orgLeaders.filter(leader =>
-        leader.leaderName.toLowerCase().includes(this.searchInput.toLowerCase()) ||
-        leader.leaderNo.toLowerCase().includes(this.searchInput.toLowerCase())
+        leader.leaderName.includes(this.searchInput.toLowerCase()) ||
+        leader.leaderNo.includes(this.searchInput.toLowerCase())
       );
     } else {
       searchResult = this.orgSchools.filter(school =>

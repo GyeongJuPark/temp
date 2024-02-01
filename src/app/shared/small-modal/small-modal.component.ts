@@ -9,18 +9,23 @@ import { Router } from '@angular/router';
 })
 export class SmallModalComponent {
   public onConfirm: EventEmitter<boolean> = new EventEmitter();
-  
+
   constructor(
     public dialogRef: MatDialogRef<SmallModalComponent>,
     private routes: Router,
-    
-  @Inject(MAT_DIALOG_DATA) public data: any
-  ){ }
+
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
 
   closeDialog(): void {
     this.dialogRef.close();
   }
-  
+
+  goToDetailPage() {
+    this.routes.navigate(["home/detail", this.data.leaderNo]);
+  }
+
+
   goToIndexPage(): void {
     this.closeDialog();
     this.routes.navigate(["home"]);

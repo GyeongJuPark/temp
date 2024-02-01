@@ -26,11 +26,17 @@
                                     <div class="input__code">
                                         <p>식별코드</p>
                                         <input type="text" id="leaderNo" name="leaderNo" placeholder="식별코드를 선택해주세요." [(ngModel)]="selectedLeader.leaderNo" readonly />
+                                        <div *ngIf="getValidationError('LeaderNo') let validationError">
+                                            <span class="text-danger">{{ validationError }}</span>
+                                        </div>
                                         <button type="button" (click)="openLargeModal('LeaderData')">식별코드검색</button>
                                     </div>
                                     <div class="input__school">
                                         <p>학교명</p>
                                         <input type="text" id="schoolName" name="schoolName" placeholder="학교명을 선택해주세요." [(ngModel)]="selectedLeader.schoolName" readonly />
+                                        <div *ngIf="getValidationError('SchoolName') let validationError">
+                                            <span class="text-danger">{{ validationError }}</span>
+                                        </div>
                                         <input type="hidden" id="schoolNo" name="schoolNo" [(ngModel)]="selectedLeader.schoolNo" />
                                         <button type="button" id="search_schoolName" (click)="openLargeModal('SchoolData')">학교명검색</button>
                                     </div>
@@ -42,15 +48,24 @@
                                     <div>
                                         <p>성명</p>
                                         <input type="text" value="" id="leaderName" name="leaderName" placeholder="이름을 입력하세요." [(ngModel)]="selectedLeader.leaderName" required />
+                                        <div *ngIf="getValidationError('LeaderName') let validationError">
+                                            <span class="text-danger">{{ validationError }}</span>
+                                        </div>
                                     </div>
                                     <div class="input__birthday">
                                         <p>생년월일</p>
                                         <input type="date" id="birthday" name="birthday" placeholder="생년월일을 선택해주세요." required aria-required="true" [(ngModel)]="selectedLeader.birthday" />
+                                        <div *ngIf="getValidationError('Birthday') let validationError">
+                                            <span class="text-danger">{{ validationError }}</span>
+                                        </div>
                                     </div>
                                     <div class="input__gender">
                                         <p>성별</p>
                                         <input type="radio" name="gender" [(ngModel)]="selectedLeader.gender" value="M" />남자
                                         <input type="radio" name="gender" [(ngModel)]="selectedLeader.gender" value="W" />여자
+                                        <div *ngIf="getValidationError('Gender') let validationError">
+                                            <span class="text-danger">{{ validationError }}</span>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -60,14 +75,13 @@
                                 <div class="form-group">
                                     <div class="input__sports">
                                         <p>종목 </p>
-                                        <!-- <select id="sportsNo" name="sportsNo" [(ngModel)]="selectedLeader.sportsNo">
-                                            <option disabled selected value={{selectedLeader.sportsNo}}>{{selectedLeader.sportsNo}}</option>
-                                            <option *ngFor="let sport of sports" [value]="sport.sportsNo">{{sport.sportsName}}</option>
-                                        </select> -->
                                         <select id="sportsNo" name="sportsNo" [(ngModel)]="selectedLeader.sportsNo">
                                             <option disabled selected>{{selectedLeader.sportsName}}</option>
                                             <option *ngFor="let sport of sports" [value]="sport.sportsNo">{{sport.sportsName}}</option>
                                         </select>
+                                        <div *ngIf="getValidationError('SportsNo') let validationError">
+                                            <span class="text-danger">{{ validationError }}</span>
+                                        </div>
                                     </div>
                                     <div class="input__tel">
                                         <p>근무지 전화번호</p>
@@ -76,12 +90,24 @@
                                         <input type="tel" id="telNo2" name="telNo1" [(ngModel)]="selectedLeader.telNo2" placeholder="063" maxlength="3" />
                                         -
                                         <input type="tel" id="telNo3" name="telNo3" [(ngModel)]="selectedLeader.telNo3" placeholder="4567" maxlength="4" />
+                                        <div *ngIf="getValidationError('TelNo') let validationError">
+                                            <span class="text-danger">{{ validationError }}</span>
+                                        </div>
+                                        <div *ngIf="getValidationError('TelNo2') let validationError">
+                                            <span class="text-danger">{{ validationError }}</span>
+                                        </div>
+                                        <div *ngIf="getValidationError('TelNo3') let validationError">
+                                            <span class="text-danger">{{ validationError }}</span>
+                                        </div>
                                     </div>
+                                    
 
                                     <div>
                                         <p>최초채용</p>
                                         <input type="date" id="empDT" name="empDT" placeholder="최초채용일을 선택해주세요." required aria-required="true" [(ngModel)]="selectedLeader.empDT" />
-
+                                        <div *ngIf="getValidationError('EmpDT') let validationError">
+                                            <span class="text-danger">{{ validationError }}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -107,9 +133,21 @@
 
                                 <tbody>
                                     <tr *ngFor="let history of selectedLeader.histories let i = index">
-                                        <td><input type="text" placeholder="학교명을 입력해주세요." [(ngModel)]="history.schoolName" [ngModelOptions]="{standalone: true}"></td>
-                                        <td><input type="date" placeholder="근무 시작일을 선택해주세요." required aria-required="true" [(ngModel)]="history.startDT" [ngModelOptions]="{standalone: true}" /></td>
-                                        <td><input type="date" placeholder="근무 종료일을 선택해주세요." required aria-required="true" [(ngModel)]="history.endDT" [ngModelOptions]="{standalone: true}" /></td>
+                                        <td><input type="text" placeholder="학교명을 입력해주세요." [(ngModel)]="history.schoolName" [ngModelOptions]="{standalone: true}">
+                                            <div *ngIf="getValidationError('Histories['+i+'].SchoolName') let validationError ">
+                                                <span class="text-danger">{{ validationError }}</span>
+                                            </div>
+                                        </td>
+                                        <td><input type="date" placeholder="근무 시작일을 선택해주세요." required aria-required="true" [(ngModel)]="history.startDT" [ngModelOptions]="{standalone: true}" />
+                                            <div *ngIf="getValidationError('Histories['+i+'].StartDT') let validationError ">
+                                                <span class="text-danger">{{ validationError }}</span>
+                                            </div>
+                                        </td>
+                                        <td><input type="date" placeholder="근무 종료일을 선택해주세요." required aria-required="true" [(ngModel)]="history.endDT" [ngModelOptions]="{standalone: true}" />
+                                            <div *ngIf="getValidationError('Histories['+i+'].EndDT') let validationError ">
+                                                <span class="text-danger">{{ validationError }}</span>
+                                            </div>
+                                        </td>
                                         <td>
                                             <select class="sel" name="sportsNo" [(ngModel)]="history.sportsNo" [ngModelOptions]="{standalone: true}">
                                                 <ng-container *ngIf="i !== 0">
@@ -117,6 +155,9 @@
                                                 </ng-container>
                                                 <option *ngFor="let sport of sports" [value]="sport.sportsNo">{{sport.sportsName}}</option>
                                             </select>
+                                            <div *ngIf="getValidationError('Histories['+i+'].SportsNo') let validationError ">
+                                                <span class="text-danger">{{ validationError }}</span>
+                                            </div>
                                         </td>
                                         <td>
                                             <input type="button" class="add_btn" value="{{ i === 0 ? '추가' : '삭제' }}" (click)="i === 0 ? addWorkHistory() : removeWorkHistory(i)" />
@@ -144,12 +185,28 @@
 
                                 <tbody>
                                     <tr *ngFor="let certificate of selectedLeader.certificates; let i = index">
-                                        <td><input type="text" placeholder="학교명을 입력해주세요." [(ngModel)]="certificate.certificateName" [ngModelOptions]="{standalone: true}" /></td>
+                                        <td><input type="text" placeholder="학교명을 입력해주세요." [(ngModel)]="certificate.certificateName" [ngModelOptions]="{standalone: true}" />
+                                            <div *ngIf="getValidationError('Certificates['+i+'].CertificateName') let validationError ">
+                                                <span class="text-danger">{{ validationError }}</span>
+                                            </div>
+                                        </td>
                                         <td><input type="text" placeholder="영문, 숫자만 입력해주세요." required aria-required="true" [(ngModel)]="certificate.certificateNo"
-                                                [ngModelOptions]="{standalone: true}" /></td>
+                                                [ngModelOptions]="{standalone: true}" />
+                                            <div *ngIf="getValidationError('Certificates['+i+'].CertificateNo') let validationError ">
+                                                <span class="text-danger">{{ validationError }}</span>
+                                            </div>
+                                        </td>
                                         <td><input type="date" placeholder="취득 일자를 선택해주세요." required aria-required="true" [(ngModel)]="certificate.certificateDT"
-                                                [ngModelOptions]="{standalone: true}" /></td>
-                                        <td><input type="text" placeholder="발급 기관을 입력해주세요." [(ngModel)]="certificate.organization" [ngModelOptions]="{standalone: true}" /></td>
+                                                [ngModelOptions]="{standalone: true}" />
+                                            <div *ngIf="getValidationError('Certificates['+i+'].CertificateDT') let validationError ">
+                                                <span class="text-danger">{{ validationError }}</span>
+                                            </div>
+                                        </td>
+                                        <td><input type="text" placeholder="발급 기관을 입력해주세요." [(ngModel)]="certificate.organization" [ngModelOptions]="{standalone: true}" />
+                                            <div *ngIf="getValidationError('Certificates['+i+'].Organization') let validationError ">
+                                                <span class="text-danger">{{ validationError }}</span>
+                                            </div>
+                                        </td>
 
                                         <td>
                                             <input type="button" class="add_btn" value="{{ i === 0 ? '추가' : '삭제' }}" (click)="i === 0 ? addCertificate() : removeCertificate(i)" />
@@ -161,7 +218,7 @@
                     </div>
                 </div>
                 <div class="buttons">
-                    <button class="cancel_btn" type="button" (click)="openSmallModal('cancel')">취소하기</button>
+                    <button class="cancel_btn" type="button" (click)="openSmallModal('updateCancel')">취소하기</button>
                     <button id="lSubmit" class="signup_btn" type="submit">수정하기</button>
                 </div>
             </div>
