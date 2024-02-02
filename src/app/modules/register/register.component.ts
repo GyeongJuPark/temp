@@ -37,6 +37,7 @@ export class RegisterComponent implements OnInit {
       birthday: '',
       gender: '',
       sportsNo: '',
+      sportsName: '',
       schoolNo: '',
       schoolName: '',
       telNo: '',

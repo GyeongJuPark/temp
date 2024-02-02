@@ -5,6 +5,7 @@ export interface LeaderWorkInfo {
     birthday: string;
     gender: string;
     sportsNo: string;
+    sportsName: string;
     schoolNo: string;
     schoolName: string;
     telNo: string;
