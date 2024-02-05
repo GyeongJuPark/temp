@@ -12,7 +12,7 @@ export class CommonService {
 
   constructor(private http: HttpClient) { }
 
-  baseUrl: string = 'sports-leader-gyeongju.azurewebsites.net'
+  baseUrl: string = 'https://localhost:7265'
 
 
   // 지도자
