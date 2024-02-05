@@ -55,10 +55,6 @@ export class UpdateComponent {
           this.selectedLeader.birthday = this.formatDate(this.selectedLeader.birthday);
           this.selectedLeader.empDT = this.formatDate(this.selectedLeader.empDT);
 
-
-
-
-
           this.selectedLeader.histories.forEach((history: { startDT: string | Date; endDT: string | Date; }) => {
             if (history.startDT !== null) {
               history.startDT = this.formatDate(new Date(history.startDT));
@@ -102,8 +98,6 @@ export class UpdateComponent {
   formatDate(date: Date): string {
     return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
   }
-
-
 
   removeWorkHistory(index: number) {
     this.selectedLeader.histories.splice(index, 1);
@@ -304,7 +298,7 @@ export class UpdateComponent {
   }
 
   // 등록 실패 시 해당 프로퍼티 에러메시지
-  getValidationError(propertyName: string): string | undefined {
+  getValidationError(propertyName: string): string {
     return this.validationErrors.find(error => error.propertyName === propertyName)?.errorMessage;
   }
 

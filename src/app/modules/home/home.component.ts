@@ -15,6 +15,7 @@ import { CommonService } from '../common.service';
 export class HomeComponent {
   displayedColumns: string[] = ['select', 'index', 'code', 'name', 'sport', 'school', 'detail'];
   dataSource = new MatTableDataSource<LeaderWorkInfo>();
+  
   // 전체 데이터
   leaderList: LeaderWorkInfo[] = [];
   // 검색 데이터
@@ -33,7 +34,6 @@ export class HomeComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
   }
 
   constructor(
@@ -47,7 +47,6 @@ export class HomeComponent {
     this.commonService.getLeaderList().subscribe({
       next: (leaders) => {
         this.leaderList = leaders;
-        this.dataSource.paginator = this.paginator;
         this.updateData();
       },
     });
@@ -68,7 +67,6 @@ export class HomeComponent {
   }
 
 
-
   changePage(page: number): void {
     this.currentPage = page;
     this.updateData();
@@ -82,7 +80,6 @@ export class HomeComponent {
     const totalPages = Math.ceil(dataList.length / this.pageSize);
     return this.currentPage === totalPages;
   }
-
 
   goToFirstPage(): void {
     this.currentPage = 1;

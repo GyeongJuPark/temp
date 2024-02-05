@@ -8,7 +8,6 @@ import { Sport } from '../../models/sport.model';
 import { CommonService } from '../common.service';
 import { LeaderWorkInfo } from '../../models/leaderWorkInfo.model';
 import { Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-register',
@@ -21,14 +20,14 @@ export class RegisterComponent implements OnInit {
   leaders: Leader[] = [];
   schools: School[] = [];
   sports: Sport[] = [];
-
   model: LeaderWorkInfo;
+  validationErrors: any[] = [];
+
 
   constructor(
     private dialog: MatDialog,
     private commonService: CommonService,
     private routes: Router,
-    private datePipe: DatePipe
   ) {
     this.model = {
       leaderNo: '',
@@ -103,7 +102,6 @@ export class RegisterComponent implements OnInit {
 
         this.model.certificates.forEach(certificate => {
           certificate.leaderNo = result.leader.leaderNo;
-          console.log(certificate.leaderNo);
 
         });
       } else if (buttonType === 'SchoolData' && result && result.school) {
@@ -263,11 +261,10 @@ export class RegisterComponent implements OnInit {
   }
 
 
-  getValidationError(propertyName: string): string | undefined {
+  getValidationError(propertyName: string): string {
     return this.validationErrors.find(error => error.propertyName === propertyName)?.errorMessage;
   }
 
-  validationErrors: any[] = [];
 
   onFormSubmit() {
     this.commonService.addLeader(this.model)
