@@ -163,9 +163,6 @@ export class HomeComponent {
     this.updateData();
   }
 
-
-
-
   selectSearchOption(option: string) {
     this.selectedSearchOption = option;
     this.searchInput = '';
@@ -245,7 +242,6 @@ export class HomeComponent {
             this.currentPage = totalPages;
             this.updateData();
           }
-
           console.log(response);
         },
         error: (error) => {
